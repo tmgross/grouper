@@ -5,30 +5,41 @@ from pymongo import MongoClient
 #Collection = user_information
 
 
-#finds all people with the given name
+#finds all people with the given name in the user_information database
+#input: the name of the person we want to find
+#returns: a list of the information of those who meet the criteria of the input
 def findPerson(name):
-        # Replace the uri string with your MongoDB deployment's connection string.
-    uri = "mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&writeConcern=majority"
+    #connection string.
+    uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(uri)
-    # database and collection code goes here
-    db = client.sample_guides
-    coll = db.planets
+    #accesses the GroupWare database
+    db = client.GroupWare  
+    #accesses the user_information collection    
+    coll = db.user_information
     # find code goes here
-    cursor = coll.find({"Name": name})
+    cursor = coll.find({"name": name})
+    
+    data =[]
     # iterate code goes here
     for doc in cursor:
+        data.append(doc)
         print(doc)
+        
     # Close the connection to MongoDB when you're done.
     client.close()
+    print(len(data))
+    return data
 
 
 
 
 
 #adds a person to the database
+#input: the name of the person we want to add
+#returns: the id of the person we just added
 def addPerson(name):
     #connection string.
-    uri = uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
+    uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(uri)
     #accesses the GroupWare database
     db = client.GroupWare  
@@ -50,10 +61,12 @@ def addPerson(name):
 
 
 
-#removes a person from the database
+#removes all people with a given name from the database
+#input: the name of the person/people we want to remove
+#returns: the number of people deleted
 def removePerson(name):
     #connection string.
-    uri = uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
+    uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(uri)
     #accesses the GroupWare database
     db = client.GroupWare  
@@ -74,8 +87,3 @@ def removePerson(name):
 
 
 
-def main():
-    uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(uri)
-    # database and collection code goes here
-    db = client.sample_guides
