@@ -31,6 +31,32 @@ def findPerson(name):
     return data
 
 
+#finds all people at the given location user_information database
+#input: the location of the people we want to find
+#returns: a list of the information of those who meet the criteria of the input
+def getPeople(loco):
+    #connection string.
+    uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(uri)
+    #accesses the GroupWare database
+    db = client.GroupWare  
+    #accesses the user_information collection    
+    coll = db.user_information
+    # find code goes here
+    cursor = coll.find({"location": loco})
+    
+    data =[]
+    # iterate code goes here
+    for doc in cursor:
+        data.append(doc)
+        print(doc)
+        
+    # Close the connection to MongoDB when you're done.
+    client.close()
+    print(len(data))
+    return data
+
+
 
 
 
@@ -38,6 +64,7 @@ def findPerson(name):
 #input: the name of the person we want to add
 #returns: the id of the person we just added
 def addPerson(name):
+    print("Started add")
     #connection string.
     uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(uri)
@@ -49,6 +76,7 @@ def addPerson(name):
     # insert code goes here
     docs = [
 	    {"name": name,},
+        {"location":1}
 	    
     ]
     result = coll.insert_many(docs)
@@ -56,6 +84,7 @@ def addPerson(name):
     print(result.inserted_ids)
     # Close the connection to MongoDB when you're done.
     client.close()
+    print("add Done")
     return result.inserted_ids
 
 
