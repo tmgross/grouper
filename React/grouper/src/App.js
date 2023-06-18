@@ -1,6 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import AddButton from './components/AddButton.tsx'
+import RemoveButton from './components/RemoveButton.tsx'
+import Header from './components/Header.tsx'
+import InputBox from './components/InputBox.tsx'
 
+
+function App(){
+  return (<div><Header  />
+  <InputBox/>
+  <AddButton/>
+  <RemoveButton/>
+  </div>
+  
+  )
+}
+
+export default App;
+
+/*
 function App() {
   return (
     <div className="App">
@@ -23,3 +41,4 @@ function App() {
 }
 
 export default App;
+*/
