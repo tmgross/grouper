@@ -1,3 +1,7 @@
+*FARM Stack Resources:*
+- https://www.mongodb.com/developer/languages/python/farm-stack-fastapi-react-mongodb/
+- https://www.freecodecamp.org/news/learn-the-farm-stack-fastapi-reactjs-mongodb/
+
 *Things to do:*
 
 1. Choose a language
