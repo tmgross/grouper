@@ -28,7 +28,7 @@ function App(){
 
   // add a user
   const addUserHandler = () => {
-    axios.post('https://localhost:8000/api/user/', {'name': name})
+    axios.post('http://localhost:8000/api/user/', {'name': name})
     .then(res => console.log(res))
     .catch(error => console.log(error))
   };
@@ -39,10 +39,7 @@ return (
   <div>
     <Header/>
     <input 
-      className="form-control nameIn" 
-      type="text" 
-      placeholder="Enter Name" 
-      onChange={event => setName(event.target.value)}/> 
+      className="form-control nameIn" type="text" placeholder="Enter Name" onChange={event => setName(event.target.value)}/> 
     <button 
       type="button" 
       onClick={addUserHandler}

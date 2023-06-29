@@ -16,7 +16,7 @@ from database import (
 # app object
 app = FastAPI()
 
-origins = ["https://localhost:3000"]
+origins = ["http://localhost:3000"]
 
 # middleware acts as a bridge between database
 #   and application
@@ -40,7 +40,7 @@ async def get_user():
 	return response
 
 @app.post("/api/user/", response_model=User)
-async def post_user(user):
+async def post_user(user: User):
 	response = await create_user(user.dict())
 	if response:
 		return response
