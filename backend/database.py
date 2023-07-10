@@ -4,10 +4,20 @@ from models import User
 #connection string: mongodb+srv://gavinbuier:<password>@userinformation.g0x0e9q.mongodb.net/
 #Database = GroupWare
 #collection = user_information
-
+from pymongo.server_api import ServerApi
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
-client = motor.AsyncIOMotorClient(uri)
+client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
+
+#from pymongo import MongoClient
+
+#uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
+# Create a new client and connect to the server
+#client = MongoClient(uri, server_api=ServerApi('1'))
+
+
+
+
 #accesses the GroupWare database
 db = client.GroupWare  
 #accesses the user_information collection    
@@ -58,9 +68,13 @@ def getPeople(loco):
 #input: the name of the person we want to add
 #returns: the id of the person we just added
 async def create_user(user):
+    dict1 = {}
     document = user
-    result = await collection.insert_one(document)
-    return document
+    dict1 = {"name": document,"location":1}
+	    
+    
+    result = await collection.insert_one(dict1)
+    return result.inserted_id
 
 
 
@@ -68,5 +82,6 @@ async def create_user(user):
 #input: the name of the person/people we want to remove
 #returns: the number of people deleted
 async def remove_user(name):
-    await collection.delete_one({"name": name})
+    result = await collection.delete_one({"name": name})
+    
 
