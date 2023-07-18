@@ -10,8 +10,13 @@ from pymongo import MongoClient
 #returns: a list of the information of those who meet the criteria of the input
 def findPerson(name):
     #connection string.
+    #uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
+    #uri = "mongodb+srv://gavinbuier:<IeljglDxt5Gew8U1>@userinformation.g0x0e9q.mongodb.net/"
+    #client = MongoClient(uri)
+    from pymongo.server_api import ServerApi
     uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(uri)
+    # Create a new client and connect to the server
+    client = MongoClient(uri, server_api=ServerApi('1'))
     #accesses the GroupWare database
     db = client.GroupWare  
     #accesses the user_information collection    
@@ -85,7 +90,7 @@ def addPerson(name):
     # Close the connection to MongoDB when you're done.
     client.close()
     print("add Done")
-    return result.inserted_ids
+    return result.InsertOneResult
 
 
 
