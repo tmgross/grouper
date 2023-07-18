@@ -1,3 +1,8 @@
+**Running Grouper in Dev Mode:**
+- start Mongo server using Mongo Compass or command line (may need to add IP address)
+- cd to grouper backend folder, run `python main.py`
+- in a separate console, cd to grouper frontend folder, run `npm start`
+
 *FARM Stack Resources:*
 - https://www.mongodb.com/developer/languages/python/farm-stack-fastapi-react-mongodb/
 - https://www.freecodecamp.org/news/learn-the-farm-stack-fastapi-reactjs-mongodb/
