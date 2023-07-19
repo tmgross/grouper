@@ -5,7 +5,7 @@ function LandingPage() {
   return (
     <div className="centered">
       <h1>Grouper</h1>
-      <div className="button-container">
+      <div className="textbox-container">
         <div>
           <Link to="/signup">
             <button type="button">Sign Up</button>
