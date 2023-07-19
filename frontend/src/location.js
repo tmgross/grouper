@@ -1,4 +1,5 @@
 import './center.css';
+import Button from '@mui/material/Button';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,12 +31,12 @@ function location() {
           placeholder="Enter Name"
           onChange={event => setName(event.target.value)}
         />
-        <button type="button" onClick={addUserHandler}>
+        <Button variant="contained" type="button" onClick={addUserHandler}>
           Join Group
-        </button>
-        <button type="button" onClick={removeUserHandler}>
+        </Button>
+        <Button variant="contained" type="button" onClick={removeUserHandler}>
           Leave Group
-        </button>
+        </Button>
       </div>
     </div>
   );

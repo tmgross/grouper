@@ -27,3 +27,34 @@
   top: 10px;
   left: 10px;
 }
+
+h1 {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.name {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 80px;
+}
+
+.company-name {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.slogan {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-style: italic;
+  font-size: 25px;
+  margin-left: 300px;
+}
+
+.name-container {
+    display: flex;
+    align-items: baseline;
+}
+

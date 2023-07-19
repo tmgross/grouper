@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Button from '@mui/material/Button';
 import './center.css';
 
 function LogInPage() {
@@ -17,7 +18,7 @@ function LogInPage() {
           type="text"
           placeholder="Enter Email"
         />
-        <button type="button">Log In</button>
+        <Button variant="contained" type="button">Log In</Button>
       </div>
     </div>
   );
