@@ -83,5 +83,6 @@ async def create_user(user):
 #returns: the number of people deleted
 async def remove_user(name):
     result = await collection.delete_one({"name": name})
+    return result
     
 
