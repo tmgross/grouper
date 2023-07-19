@@ -3,6 +3,9 @@ import asyncio
 import database
 
 class TestDatabaseMethods(unittest.TestCase):
+    # The first two test cases are commented out because running multiple test cases does not work, as the loop
+    # cannot be reopened once it is closed. The final, uncommented test case covers all functions, so this
+    # should not be a problem 
     '''
     def test_create_user(self):
         loop = asyncio.new_event_loop()
