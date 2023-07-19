@@ -1,6 +1,6 @@
 import motor.motor_asyncio as motor
 from models import User
-
+from models import Location
 #connection string: mongodb+srv://gavinbuier:<password>@userinformation.g0x0e9q.mongodb.net/
 #Database = GroupWare
 #collection = user_information
@@ -21,7 +21,7 @@ client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
 #accesses the GroupWare database
 db = client.GroupWare  
 #accesses the user_information collection    
-collection = db.user_information
+collection = db.user_locations
 
 
 #finds all people with the given name in the user_information database
@@ -64,15 +64,13 @@ def getPeople(loco):
 '''
 
 
-#adds a person to the database
-#input: the name of the person we want to add
-#returns: the id of the person we just added
-async def create_user(user):
+# adds a person to a location in user locations
+# input: the name of the person we want to add
+# returns: the id of the person we just added
+async def addUserToLocation(user,locationid):
     dict1 = {}
     document = user
-    dict1 = {"name": document,"location":1}
-	    
-    
+    dict1 = {"name": document.getName(),"location":locationid,"userid":document.getId()}
     result = await collection.insert_one(dict1)
     return result.inserted_id
 
@@ -81,7 +79,36 @@ async def create_user(user):
 #removes all people with a given name from the database
 #input: the name of the person/people we want to remove
 #returns: the number of people deleted
-async def remove_user(name):
-    result = await collection.delete_one({"name": name})
+async def remove_user(user):
+    result = await collection.delete_one({"userid": user.getId()})
     
 
+async def createNewUser(email,name):
+    #uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
+    #client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
+    #db = client.GroupWare  
+    #accesses the user_information collection    
+    userCollection = db.user_accounts
+    dict1 = {"email": email ,"name":name}
+    result = await userCollection.insert_one(dict1)
+    return result.inserted_id
+
+async def logInUser(email):
+    return User(email)
+
+# adds a new location to the locations table
+async def createNewLocation(name):
+    locoCollection = db.locations
+    dict1 = {"name":name}
+    result = await locoCollection.insert_one(dict1)
+    return result.inserted_id
+
+#returns the location based on id
+async def getLocation(id):
+    return Location(id)
+
+# returns all of the locations in the locations database {id,name}
+async def getAllLocations():
+    locoCollection = db.locations
+    cursor = locoCollection.find()
+    return cursor
