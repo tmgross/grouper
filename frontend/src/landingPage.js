@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 function LandingPage() {
   return (
@@ -8,13 +9,13 @@ function LandingPage() {
       <div className="textbox-container">
         <div>
           <Link to="/signup">
-            <button type="button">Sign Up</button>
+            <Button variant="contained" type="button" >Sign Up</Button>
           </Link>
         </div>
         
         <div>
           <Link to="/login">
-            <button type="button">Log In</button>
+            <Button variant="contained" type="button">Log In</Button>
           </Link>
         </div>
       </div>
