@@ -65,7 +65,8 @@ h2 {
 .button-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Left-justify the buttons */
+  justify-content: center; /* Center the buttons vertically */
   border: 2px solid #ccc;
   padding: 10px;
   border-radius: 10px; 
@@ -83,9 +84,9 @@ h2 {
   font-size: 20px;
   color: #000;
   cursor: pointer;
+  text-align: left; /* Left-justify the text inside the buttons */
 }
 
-/* Optional: Add some spacing between the buttons */
 .button-container button + button {
   margin-top: 5px;
 }
