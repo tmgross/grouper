@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Button from '@mui/material/Button';
 import './center.css';
 
 function LogInPage() {
@@ -30,9 +31,7 @@ function LogInPage() {
           placeholder="Enter Email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button type="button" onClick={handleLogin}>
-          Log In
-        </button>
+        <Button variant="contained" type="button" onClick={handleLogin}>Log In</Button>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
+import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './center.css';
 
@@ -38,9 +39,7 @@ function SignUpPage() {
           placeholder="Enter Name"
           onChange={(n) => setName(n.target.value)}
         />
-        <button type="button" onClick={handleSignup}>
-          Sign Up
-        </button>
+        <Button variant="contained" type="button" onClick={handleSignup}>Log In</Button>
       </div>
     </div>
   );
