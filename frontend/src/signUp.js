@@ -13,8 +13,8 @@ function SignUpPage() {
 
 
   const handleSignup = () => {
-    axios.post(`http://localhost:8000/`, email, name)
-      .then(res => console.log(res))
+    axios.post(`http://localhost:8000/api/user/`, {email, name})
+      .then(res => console.log(res.data))
       .catch(e => console.log(e))
   };
 
