@@ -16,14 +16,17 @@ collection = db.user_accounts
 async def create_new_user(email, name):
     #accesses the user_information collection
     userCollection = db.user_accounts
-    dict1 = {"email": email ,"name":name}
+    dict1 = {"email": email ,"name": name}
     result = await userCollection.insert_one(dict1)
     print(result)
     return result.inserted_id
 
 
 async def log_in_user(email):
-    return User(email)
+    user = User(email)
+    await user.initialize()
+    print("*")
+    return user
 
 
 

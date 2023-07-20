@@ -10,10 +10,10 @@ function LogInPage() {
 
   const [email, setEmail] = useState('');
 
-  const handleLogin = async () => {
-    axios.get(`http://localhost:8000/`, email)
-      .then(res => console.log(email))
-      .catch(console.log("error"))
+  const handleLogin = () => {
+    axios.get(`http://localhost:8000/api/user/${email}`)
+      .then(res => console.log(res.data))
+      .catch(e => console.log(e))
   };
 
 
