@@ -3,19 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import uvicorn
 
-from models import User
-import models
+from models import CreateUserRequest
 
 from database import (
-	fetch_one_user,
-	fetch_all_users,
-	create_user,
-	remove_user,
-	logInUser,
-	addUserToLocation,
-	createNewUser,
-	getAllLocations,
-	getLocation,
+	create_new_user,
 )
 
 # current user
@@ -26,8 +17,7 @@ app = FastAPI()
 
 origins = ["http://localhost:3000"]
 
-# middleware acts as a bridge between database
-#   and application
+# middleware acts as a bridge between database and application
 app.add_middleware(
 	CORSMiddleware,
 	allow_origins=origins,
@@ -36,10 +26,19 @@ app.add_middleware(
 	allow_headers=["*"],
 )
 
-#logging in the user
-@app.get("/api/user/{email}")
-async def logIn(email):
-	currUser = logInUser(email)
+#creating a new user
+@app.post("/api/user/")
+async def new_user(request: CreateUserRequest):
+	response = await create_new_user(request.email, request.name)
+	print(response)
+	if response:
+		return response
+	raise HTTPException(status_code=400, detail="Failed to create a new user")
+
+# #logging in the user
+# @app.get("/api/user/")
+# async def log_in(email:str):
+# 	currUser = log_in_user(email)
 
 
 @app.get("/")
@@ -47,19 +46,12 @@ async def read_root():
 	return {"Hello": "World"}
 
 
-@app.get("/api/user")
-async def get_user():
-	response = await fetch_all_users()
-	return response
+# @app.get("/api/user")
+# async def get_user():
+# 	response = await fetch_all_users()
+# 	return response
 
-#creating a new user
-@app.post("/api/user/", response_model=User)
-async def new_user(name, email):
-	response = await createNewUser(email,name)
-	if response:
-		return response
-	raise HTTPException(400, "Something went wrong")
-
+'''
 #joining a location
 @app.put("/api/user/{locationid}")
 async def joinLocation(locationid):
@@ -83,7 +75,7 @@ async def getLocations():
 	response = await getAllLocations()
 	return response
 
-#creates an object for a specific location 
+#creates an object for a specific location
 @app.get("/api/user/{locationid}")
 async def getCurrLocation(locationid):
 	currLoco = getLocation(locationid)
@@ -92,7 +84,7 @@ async def getCurrLocation(locationid):
 @app.get("/api/user/")
 async def getUsersAtLoco(locationid):
 	return currLoco.getCurrentUsers()
-
+'''
 
 if __name__ == "__main__":
     uvicorn.run(

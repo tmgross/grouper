@@ -1,14 +1,26 @@
 import React from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './center.css';
 
 function LogInPage() {
+
+  const [email, setEmail] = useState('');
+
+  const handleLogin = async () => {
+    axios.get(`http://localhost:8000/`, email)
+      .then(res => console.log(email))
+      .catch(console.log("error"))
+  };
+
+
   return (
     <div className="centered">
       <Link to="/" className="go-back-button">
-      <IconButton type="button"><ArrowBackIcon /></IconButton>
+        <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
       <h1 className="location">Log In</h1>
       <div className="textbox-container">
@@ -16,8 +28,11 @@ function LogInPage() {
           className="form-control nameIn"
           type="text"
           placeholder="Enter Email"
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <button type="button">Log In</button>
+        <button type="button" onClick={handleLogin}>
+          Log In
+        </button>
       </div>
     </div>
   );
