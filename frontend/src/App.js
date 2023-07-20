@@ -7,6 +7,9 @@ import SignUp from './signUp';
 import LogIn from './logIn';
 import MainPage from './mainPage';
 
+
+
+
 function App() {
   return (
     <Router>
