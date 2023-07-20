@@ -7,15 +7,19 @@ from models import CreateUserRequest
 
 from database import (
 	create_new_user,
+	log_in_user
 )
 
 # current user
+global currUser
 currUser = None
-currLoco = None
+# currLoco = None
+
+
 # app object
 app = FastAPI()
 
-origins = ["http://localhost:3000"]
+origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3000", "https://localhost:3000/",]
 
 # middleware acts as a bridge between database and application
 app.add_middleware(
@@ -35,10 +39,11 @@ async def new_user(request: CreateUserRequest):
 		return response
 	raise HTTPException(status_code=400, detail="Failed to create a new user")
 
-# #logging in the user
-# @app.get("/api/user/")
-# async def log_in(email:str):
-# 	currUser = log_in_user(email)
+#logging in the user
+@app.get("/api/user/")
+async def log_in(email: str):
+	currUser = await log_in_user(email)
+	return currUser.getName()
 
 
 @app.get("/")

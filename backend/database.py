@@ -1,6 +1,8 @@
 import motor.motor_asyncio as motor
 from pymongo.server_api import ServerApi
 
+from objects import User
+
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
 client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
@@ -19,8 +21,9 @@ async def create_new_user(email, name):
     print(result)
     return result.inserted_id
 
-# async def log_in_user(email):
-#     return User(email)
+
+async def log_in_user(email):
+    return User(email)
 
 
 
