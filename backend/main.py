@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+#from starlette.middleware.cors import CORSMiddleware
 
 import uvicorn
 
@@ -7,7 +8,8 @@ from models import CreateUserRequest
 
 from database import (
 	create_new_user,
-	log_in_user
+	log_in_user,
+	getAllLocations,
 )
 
 # current user
@@ -25,11 +27,12 @@ origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3
 app.add_middleware(
 	CORSMiddleware,
 	#allow_origins=["http://localhost:3000"],
-	allow_origins=origins,
+	allow_origins=["*"],
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],
 )
+
 
 #creating a new user
 @app.post("/api/user/")
@@ -51,6 +54,12 @@ async def log_in(email: str):
 @app.get("/")
 async def read_root():
 	return {"Hello": "World"}
+
+#getting all locations
+@app.get("/api/location/")
+async def getLocations():
+	response = await getAllLocations()
+	return response
 
 
 # @app.get("/api/user")
@@ -75,17 +84,14 @@ async def delete_user():
 	if response:
 		return "Successfully deleted user"
 	raise HTTPException(404, f"There is no user with the name {currUser.getName()}")
+'''
 
-#getting all locations
-@app.get("/api/user")
-async def getLocations():
-	response = await getAllLocations()
-	return response
-
+'''
 #creates an object for a specific location
 @app.get("/api/user/{locationid}")
 async def getCurrLocation(locationid):
 	currLoco = getLocation(locationid)
+
 
 # gets all users at a location
 @app.get("/api/user/")
@@ -98,3 +104,4 @@ if __name__ == "__main__":
         "main:app",
         reload=True
     )
+    

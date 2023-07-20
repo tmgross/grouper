@@ -100,11 +100,13 @@ async def createNewLocation(name):
 #returns the location based on id
 async def getLocation(id):
     return Location(id)
-
+'''
 # returns all of the locations in the locations database {id,name}
 async def getAllLocations():
     locoCollection = db.locations
     cursor = locoCollection.find()
-    return cursor
+    locos = {}
+    async for document in cursor:
+            locos[document["_id"]]=document["name"]
+    return locos
 
-'''
