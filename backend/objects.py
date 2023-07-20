@@ -14,11 +14,20 @@ class User:
         self.email = email
 
         #accesses the user_information collection
+        
+        #userCollection = db.user_accounts
+        #document = userCollection.find_one({"email": email})
+        #self.name = document["name"]
+        #self.id = document["_id"]
+
+
+    async def init_user(self):
+        # accesses the user_information collection
         userCollection = db.user_accounts
-        document = userCollection.find_one({"email": email})
+        document = await userCollection.find_one({"email": self.email})
         self.name = document["name"]
         self.id = document["_id"]
-
+        
     def getEmail(self):
         return self.email
     def getName(self):

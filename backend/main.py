@@ -24,6 +24,7 @@ origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3
 # middleware acts as a bridge between database and application
 app.add_middleware(
 	CORSMiddleware,
+	#allow_origins=["http://localhost:3000"],
 	allow_origins=origins,
 	allow_credentials=True,
 	allow_methods=["*"],
@@ -40,10 +41,11 @@ async def new_user(request: CreateUserRequest):
 	raise HTTPException(status_code=400, detail="Failed to create a new user")
 
 #logging in the user
-@app.get("/api/user/")
+@app.get("/api/user/{email}")
 async def log_in(email: str):
 	currUser = await log_in_user(email)
-	return currUser.getName()
+	print(currUser.getEmail())
+	return currUser.getId()
 
 
 @app.get("/")

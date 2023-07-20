@@ -23,7 +23,9 @@ async def create_new_user(email, name):
 
 
 async def log_in_user(email):
-    return User(email)
+    user = User(email)
+    await user.init_user()
+    return user
 
 
 
