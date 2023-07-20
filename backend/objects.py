@@ -13,11 +13,18 @@ class User:
     def __init__(self, email):
         self.email = email
 
-    async def initialize(self):
         #accesses the user_information collection
+
+        #userCollection = db.user_accounts
+        #document = userCollection.find_one({"email": email})
+        #self.name = document["name"]
+        #self.id = document["_id"]
+
+
+    async def initialize(self):
+        # accesses the user_information collection
         userCollection = db.user_accounts
-        document = userCollection.find_one({"email": self.email})
-        print("******", document["email"])
+        document = await userCollection.find_one({"email": self.email})
         self.name = document["name"]
         self.id = document["_id"]
 

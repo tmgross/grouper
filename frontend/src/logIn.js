@@ -10,7 +10,7 @@ function LogInPage() {
 
   const [email, setEmail] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     axios.get(`http://localhost:8000/api/user/${email}`)
       .then(res => console.log(res.data))
       .catch(e => console.log(e))

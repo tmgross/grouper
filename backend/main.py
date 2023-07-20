@@ -3,13 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import uvicorn
 
-from objects import User
 from models import CreateUserRequest
 
 from database import (
 	create_new_user,
 	log_in_user
 )
+
+# current user
+global currUser
+currUser = None
+# currLoco = None
+
 
 # app object
 app = FastAPI()
@@ -19,6 +24,7 @@ origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3
 # middleware acts as a bridge between database and application
 app.add_middleware(
 	CORSMiddleware,
+	#allow_origins=["http://localhost:3000"],
 	allow_origins=origins,
 	allow_credentials=True,
 	allow_methods=["*"],
@@ -38,9 +44,8 @@ async def new_user(request: CreateUserRequest):
 @app.get("/api/user/{email}")
 async def log_in(email: str):
 	currUser = await log_in_user(email)
-	if currUser:
-		return {"name": currUser.getName()}
-	raise HTTPException(status_code=400, detail="Failed to log in")
+	print(currUser.getEmail())
+	return currUser.getId()
 
 
 @app.get("/")
@@ -89,11 +94,7 @@ async def getUsersAtLoco(locationid):
 '''
 
 if __name__ == "__main__":
-    # current user
-	currUser = None
-	currLoco = None
-
-	uvicorn.run(
+    uvicorn.run(
         "main:app",
         reload=True
     )
