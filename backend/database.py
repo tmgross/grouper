@@ -107,6 +107,7 @@ async def getAllLocations():
     cursor = locoCollection.find()
     locos = {}
     async for document in cursor:
-            locos[document["_id"]]=document["name"]
+            locos[str(document["_id"])]=document["name"]
+            print(document["name"])
     return locos
 

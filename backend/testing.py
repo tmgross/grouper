@@ -1,5 +1,6 @@
 import database
 import asyncio
+from objects import User
 
 
 def add_test(name):
@@ -37,4 +38,27 @@ def remove_test(name):
     #assert(len(users)==0)
 
 
-remove_test("Bob Bob")
+def login_test(email):
+    loop = asyncio.get_event_loop()
+    try:
+        user = loop.run_until_complete(database.log_in_user(email))
+        print(user.getName())
+        print(user.getId())
+        assert(user!=None)
+    finally:
+        loop.close()
+
+
+def getLocos():
+    loop = asyncio.get_event_loop()
+    try:
+        locos = loop.run_until_complete(database.getAllLocations())
+        assert(locos!=None)
+        print(locos)
+        #for i in locos:
+        #    print(i)
+    finally:
+        loop.close()
+
+
+login_test("test@test.com")

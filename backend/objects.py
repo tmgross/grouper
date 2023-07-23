@@ -26,7 +26,7 @@ class User:
         userCollection = db.user_accounts
         document = await userCollection.find_one({"email": self.email})
         self.name = document["name"]
-        self.id = document["_id"]
+        self.id = str(document["_id"])
 
     def getEmail(self):
         return self.email

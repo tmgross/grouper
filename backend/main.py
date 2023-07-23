@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-#from starlette.middleware.cors import CORSMiddleware
-
+from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware import Middleware
 import uvicorn
 
 from models import CreateUserRequest
@@ -21,9 +21,13 @@ currUser = None
 # app object
 app = FastAPI()
 
+
+
 origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3000", "https://localhost:3000/",]
 
+
 # middleware acts as a bridge between database and application
+
 app.add_middleware(
 	CORSMiddleware,
 	#allow_origins=["http://localhost:3000"],

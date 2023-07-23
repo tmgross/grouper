@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 function location() {
 
   const [locations, setLocations] = useState({});
@@ -14,15 +15,16 @@ function location() {
     .catch(e => console.log(e))
   });
 
+
   return (
     <div className="centered">
       <h1 className="location company-name">grouper</h1>
       <div className="textbox-container">
         <h2>Your Groups</h2>
         <div className="button-container">
-            {Object.keys(locations).map(locationKey => (
+          {Object.keys(locations).map(locationKey => (
             <button key={locationKey} onClick={() => console.log(locations[locationKey])}>
-              {locations[locationKey].name}
+              {locations[locationKey]}
             </button>
           ))}
             
