@@ -1,16 +1,14 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
-from starlette.middleware import Middleware
 import uvicorn
 
 from models import *
 from database import *
 
 # current user
-global currUser
+global currUser, currLoco
 currUser = None
-# currLoco = None
+currLoco = None
 
 # app object
 app = FastAPI()
@@ -22,8 +20,7 @@ origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3
 
 app.add_middleware(
 	CORSMiddleware,
-	#allow_origins=["http://localhost:3000"],
-	allow_origins=["*"],
+	allow_origins=origins,
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],
@@ -48,12 +45,13 @@ async def new_user(request: CreateUserRequest):
 async def log_in(email: str):
 	currUser = await log_in_user(email)
 	print(currUser.getEmail())
-	return currUser.getId()
+	if currUser.getId():
+		return currUser.getId()
+	raise HTTPException(status_code=404, detail="User")
 
 #creating a new group
 @app.post("/api/group/")
 async def new_group(request: CreateGroupRequest):
-	print("main.py new_group(group)")
 	response = await create_new_group(request.group)
 	print(response)
 	if response:
