@@ -1,7 +1,10 @@
 import './center.css';
 import Button from '@mui/material/Button';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Location() {
@@ -27,8 +30,8 @@ function Location() {
                 This is a large text box that users can't edit.
                 </textarea>
             </div>
-
-            <div className="textbox-container">
+         
+            <div className="textbox-container" style={{marginLeft:'10px'}}>
                 <h2>Your Groups</h2>
                 <div class="button-container">
                     <button>Button 1</button>
@@ -39,9 +42,15 @@ function Location() {
             </div>
         </div>
 
-        <div>
+        <div style={{marginTop:'10px'}}>
+          <Link to="/friends">
+            <Button variant="contained" type="button" style={{width: '150px', height: '60px', marginRight: '10px'}} >Add Friend</Button>
+          </Link>
+          <Link to="/invites">
+            <Button variant="contained" type="button" style={{width: '175px', height: '60px', marginRight: '10px'}} >Invites and Friend Requests</Button>
+          </Link>
           <Link to="/group">
-            <Button variant="contained" type="button" style={{width: '150px'}} >Create Group</Button>
+            <Button variant="contained" type="button" style={{width: '150px', height: '60px'}} >Create Group</Button>
           </Link>
         </div>
 
