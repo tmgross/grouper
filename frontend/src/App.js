@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './landingPage';
 import Location from './location';
@@ -7,9 +6,6 @@ import SignUp from './signUp';
 import LogIn from './logIn';
 import MainPage from './mainPage';
 import GroupPage from './createGroup';
-
-
-
 
 function App() {
   return (

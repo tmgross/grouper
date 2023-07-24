@@ -13,13 +13,21 @@ class CreateUserRequest(BaseModel):
             }
         }
 
+class CreateGroupRequest(BaseModel):
+    group: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "group": "location_name",
+            }
+        }
+
 
 
 
 
 '''
-
-
 #object for a location
 class Location:
     def __init__(self,id):

@@ -6,11 +6,7 @@ from objects import User
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
 client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
-#accesses the GroupWare database
 db = client.GroupWare
-#accesses the user_information collection
-collection = db.user_accounts
-
 
 
 async def create_new_user(email, name):
@@ -25,8 +21,21 @@ async def create_new_user(email, name):
 async def log_in_user(email):
     user = User(email)
     await user.initialize()
-    print("*")
     return user
+
+
+async def create_new_group(group):
+    print("database.py create_new_group(group)")
+    #accesses the user_information collection
+    locoCollection = db.locations
+    dict1 = {"name": group}
+    result = await locoCollection.insert_one(dict1)
+    print(result)
+    if result:
+        return str(result.inserted_id)
+    else:
+        print("Error occurred while creating group")
+        return None
 
 
 

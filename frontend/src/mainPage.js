@@ -1,10 +1,7 @@
 import './center.css';
 import Button from '@mui/material/Button';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { IconButton } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Location() {
@@ -30,7 +27,7 @@ function Location() {
                 This is a large text box that users can't edit.
                 </textarea>
             </div>
-         
+
             <div className="textbox-container">
                 <h2>Your Groups</h2>
                 <div class="button-container">

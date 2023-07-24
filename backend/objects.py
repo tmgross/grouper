@@ -7,21 +7,13 @@ client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
 db = client.GroupWare
 
 
-
 # class for users that stores each users information
 class User:
     def __init__(self, email):
         self.email = email
 
-        #accesses the user_information collection
-
-        #userCollection = db.user_accounts
-        #document = userCollection.find_one({"email": email})
-        #self.name = document["name"]
-        #self.id = document["_id"]
-
-
     async def initialize(self):
+        print("objects.py User.initialize()")
         # accesses the user_information collection
         userCollection = db.user_accounts
         document = await userCollection.find_one({"email": self.email})
