@@ -19,18 +19,19 @@ function Location() {
                     id="friendsTextBox"
                     rows="11"
                     cols="30"
-                    readonly
+                    readOnly
                     disabled
                     className='friends-list'
                     style={{  resize: 'none' }}
+                    value="This is a large text box that users can't edit."
+
                 >
-                This is a large text box that users can't edit.
                 </textarea>
             </div>
 
             <div className="textbox-container" style={{marginLeft:'10px'}}>
                 <h2>Your Groups</h2>
-                <div class="button-container">
+                <div className="button-container">
                     <button>Button 1</button>
                     <button>Button 2</button>
                     <button>Button 3</button>
