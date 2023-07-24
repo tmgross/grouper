@@ -1,10 +1,9 @@
 import './center.css';
 import Button from '@mui/material/Button';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Location() {
@@ -26,7 +25,7 @@ function Location() {
                     <button>Button 4</button>
                 </div>
             </div>
-         
+
             <div className="textbox-container" style={{marginLeft:'10px'}}>
                 <h2>Group Invites</h2>
                 <div class="button-container">
