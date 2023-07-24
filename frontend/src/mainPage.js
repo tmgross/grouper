@@ -1,6 +1,9 @@
 import './center.css';
 import Button from '@mui/material/Button';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -8,6 +11,9 @@ function Location() {
 
   return (
     <div className="centered">
+      <Link to="/" className="log-out-button">
+        <Button variant="contained" type="button">Log Out</Button>
+      </Link>
       <h1 className="location company-name">grouper</h1>
         <div style={{ display: 'flex' }}>
             <div className="textbox-container">
@@ -35,6 +41,13 @@ function Location() {
                 </div>
             </div>
         </div>
+
+        <div>
+          <Link to="/group">
+            <Button variant="contained" type="button" style={{width: '150px'}} >Create Group</Button>
+          </Link>
+        </div>
+
     </div>
   );
 }

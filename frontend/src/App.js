@@ -6,6 +6,7 @@ import Location from './location';
 import SignUp from './signUp';
 import LogIn from './logIn';
 import MainPage from './mainPage';
+import GroupPage from './createGroup';
 
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/login" element={<LogIn />} />
         <Route exact path="/main" element={<MainPage />} />
+        <Route exact path="/group" element={<GroupPage />} />
       </Routes>
     </Router>
   );
