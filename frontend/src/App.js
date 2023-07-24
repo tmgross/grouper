@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './landingPage';
 import Location from './location';
@@ -8,6 +9,9 @@ import MainPage from './mainPage';
 import GroupPage from './createGroup';
 import FriendPage from './addFriend';
 import InvitePage from './invites';
+
+
+
 
 function App() {
   return (
