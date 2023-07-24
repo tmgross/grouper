@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import './center.css';
 
-function LogInPage() {
+function CreateGroupPage() {
   const [group, setGroup] = useState('');
   const navigate = useNavigate();
 
@@ -39,4 +39,4 @@ function LogInPage() {
   );
 }
 
-export default LogInPage;
+export default CreateGroupPage;

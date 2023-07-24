@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import './center.css';
 
-function LogInPage() {
+function AddFriendPage() {
   const [friend, setFriend] = useState('');
   const navigate = useNavigate();
 
@@ -57,4 +57,4 @@ function LogInPage() {
   );
 }
 
-export default LogInPage;
+export default AddFriendPage;

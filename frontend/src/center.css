@@ -113,3 +113,20 @@ h2 {
   width: 220px; 
   height: 50px;
 }
+
+.highlight-on-hover {
+  /* Add styles for the normal state of the button */
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+
+  /* Add styles for the hover state of the button */
+  transition: background-color 0.3s ease;
+}
+
+.highlight-on-hover:hover {
+  background-color: #ddd; /* Change to the desired highlight color */
+}

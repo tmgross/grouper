@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Location() {
+function MainPage() {
 
   return (
     <div className="centered">
@@ -31,14 +31,14 @@ function Location() {
                 </textarea>
             </div>
          
-            <div className="textbox-container" style={{marginLeft:'10px'}}>
-                <h2>Your Groups</h2>
-                <div class="button-container">
-                    <button>Button 1</button>
-                    <button>Button 2</button>
-                    <button>Button 3</button>
-                    <button>Button 4</button>
-                </div>
+            <div className="textbox-container" style={{ marginLeft: '10px' }}>
+              <h2>Your Groups</h2>
+              <div className="button-container">
+                <button className="highlight-on-hover">Button 1</button>
+                <button className="highlight-on-hover">Button 2</button>
+                <button className="highlight-on-hover">Button 3</button>
+                <button className="highlight-on-hover">Button 4</button>
+              </div>
             </div>
         </div>
 
@@ -58,4 +58,4 @@ function Location() {
   );
 }
 
-export default Location;
+export default MainPage;
