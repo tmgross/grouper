@@ -2,6 +2,7 @@ import motor.motor_asyncio as motor
 from pymongo.server_api import ServerApi
 
 from objects import User
+from objects import Location
 
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
@@ -96,11 +97,11 @@ async def createNewLocation(name):
     dict1 = {"name":name}
     result = await locoCollection.insert_one(dict1)
     return result.inserted_id
-
+'''
 #returns the location based on id
 async def getLocation(id):
     return Location(id)
-'''
+
 # returns all of the locations in the locations database {id,name}
 async def getAllLocations():
     locoCollection = db.locations
