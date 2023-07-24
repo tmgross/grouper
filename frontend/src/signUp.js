@@ -42,7 +42,7 @@ function SignUpPage() {
           onChange={(n) => setName(n.target.value)}
         />
         <Link to="/main"> {/* REMOVE THIS ONCE THERE ARE NO ERRORS */}
-          <Button variant="contained" type="button" onClick={handleSignup}>Sign Up</Button>
+          <Button variant="contained" type="button" style={{width: '100px'}} onClick={handleSignup}>Sign Up</Button>
         </Link>
       </div>
     </div>

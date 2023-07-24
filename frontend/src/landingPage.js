@@ -13,13 +13,13 @@ function LandingPage() {
       <div className="textbox-container">
         <div>
           <Link to="/login">
-            <Button variant="contained" type="button">Log In</Button>
+            <Button variant="contained" type="button" style={{width: '100px'}}>Log In</Button>
           </Link>
         </div>
 
         <div>
           <Link to="/signup">
-            <Button variant="contained" type="button" >Sign Up</Button>
+            <Button variant="contained" type="button" style={{width: '100px'}}>Sign Up</Button>
           </Link>
         </div>
       </div>
