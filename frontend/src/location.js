@@ -24,12 +24,22 @@ function location() {
       .catch(error => console.log(error));
   };
 
+  const getLocoName = async (locationid) => {
+    axios.get(`/api/user/loconame`)
+      .then(res => {
+        console.log(res.data);
+        // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
+      })
+      .catch(e => console.log(e))
+  };
+
+
   return (
     <div className="centered">
       <Link to="/main" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
-      <h1 className="location">Union</h1>
+      <h1 className="location">Location</h1>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <h2 style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>Who's Here?</h2>
         <textarea

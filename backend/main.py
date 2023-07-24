@@ -10,12 +10,14 @@ from database import (
 	create_new_user,
 	log_in_user,
 	getAllLocations,
+	getLocation,
 )
 
 # current user
 global currUser
 currUser = None
-# currLoco = None
+global currLoco
+currLoco = None
 
 
 # app object
@@ -65,6 +67,17 @@ async def getLocations():
 	response = await getAllLocations()
 	return response
 
+#creates an object for a specific location
+@app.get("/api/user/{locationId}")
+async def getCurrLocation(locationId):
+	currLoco = await getLocation(locationId)
+	return currLoco
+
+@app.get("/api/user/loconame")
+async def getLocoName():
+	if currLoco is None or currLoco.getName() is None:
+		return "Error"
+	return currLoco.getName()
 
 # @app.get("/api/user")
 # async def get_user():

@@ -26,7 +26,6 @@ async def create_new_user(email, name):
 async def log_in_user(email):
     user = User(email)
     await user.initialize()
-    print("*")
     return user
 
 
@@ -100,7 +99,10 @@ async def createNewLocation(name):
 '''
 #returns the location based on id
 async def getLocation(id):
-    return Location(id)
+    loco = Location(str(id))
+    await loco.initialize()
+    print(loco.getName())
+    return loco
 
 # returns all of the locations in the locations database {id,name}
 async def getAllLocations():
@@ -108,7 +110,10 @@ async def getAllLocations():
     cursor = locoCollection.find()
     locos = {}
     async for document in cursor:
-            locos[str(document["_id"])]=document["name"]
-            print(document["name"])
+            if document.get("name") is not None:
+                locos[str(document["_id"])]=document["name"]
+                print(document["name"])
+    #for d in locos.keys():
+    #     print("id = ",d)
     return locos
 

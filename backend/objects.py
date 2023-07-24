@@ -1,6 +1,6 @@
 from pymongo.server_api import ServerApi
 import motor.motor_asyncio as motor
-
+from bson.objectid import ObjectId
 
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
 client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
@@ -47,24 +47,32 @@ class User:
 
 class Location:
     def __init__(self,id):
-        self.id = id
-        uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
-        client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
-        db = client.GroupWare
-        #accesses the user_information collection
-        locoCollection = db.locations
-        document = locoCollection.find_one({"_id": id})
-        self.name = document["name"]
+        print(id)
+        self.id = str(id)
+        self.name= "N/A"
         self.totalUsers = []
 
+    async def initialize(self):
+        #accesses the user_information collection
+        locoCollection = db.locations
+        print("id = ",self.id)
+        objInstance = ObjectId(self.id)
+        document = await locoCollection.find_one({"_id": objInstance})
+        print("Document = {document}")
+        if document is not None:
+            self.name = document["name"]
+            self.totalUsers = []
+        
     def getId(self):
         return self.id
 
     def getName(self):
+        if(self.name is None):
+            return "N/A"
         return self.name
 
     def getCurrentUsers(self):
-        cursor = db.user_locations.find({'location': self.id},{'name':1,'_id':0,'location':0})
+        cursor = db.user_locations.find({'locationId': ObjectId(self.id)},{'name':1,'_id':0,'location':0})
         return cursor
 
     def getTotalUsers(self):
