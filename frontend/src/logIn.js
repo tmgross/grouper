@@ -2,18 +2,22 @@ import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import './center.css';
 
 function LogInPage() {
-
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     axios.get(`http://localhost:8000/api/user/${email}`)
-      .then(res => console.log(res.data))
+      .then(res => {
+        console.log(res.data);
+        // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
+      })
       .catch(e => console.log(e))
   };
 
@@ -31,8 +35,9 @@ function LogInPage() {
           placeholder="Enter Email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Button variant="contained" type="button" onClick={handleLogin}>Log In</Button>
-      </div>
+        <Link to="/main"> {/* REMOVE THIS ONCE THERE ARE NO ERRORS */}
+          <Button variant="contained" type="button" style={{width: '100px'}} onClick={handleLogin}>Log In</Button>
+        </Link>      </div>
     </div>
   );
 }
