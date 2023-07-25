@@ -89,5 +89,5 @@ def testLoco2():
 
 
 #login_test("test@test.com")
-#testLocationGet("64b6bfbb54263d417e25e9d1")
-testLoco2()
+testLocationGet("64b6bfbb54263d417e25e9d1")
+#testLoco2()

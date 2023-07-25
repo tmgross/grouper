@@ -15,9 +15,9 @@ from database import (
 
 # current user
 global currUser
-currUser = None
+
 global currLoco
-currLoco = None
+
 
 
 # app object
@@ -52,8 +52,9 @@ async def new_user(request: CreateUserRequest):
 #logging in the user
 @app.get("/api/user/{email}")
 async def log_in(email: str):
+	global currUser
 	currUser = await log_in_user(email)
-	print(currUser.getEmail())
+	print(currUser.getName())
 	return currUser.getId()
 
 
@@ -68,8 +69,9 @@ async def getLocations():
 	return response
 
 #creates an object for a specific location
-@app.get("/api/user/{locationId}")
+@app.get("/api/user/loco/{locationId}")
 async def getCurrLocation(locationId):
+	global currLoco
 	currLoco = await getLocation(locationId)
 	return currLoco
 
@@ -78,6 +80,13 @@ async def getLocoName():
 	if currLoco is None or currLoco.getName() is None:
 		return "Error"
 	return currLoco.getName()
+
+@app.get("/api/username")
+async def getUserName():
+	if currUser is None:
+		return "invalid user"
+	else:
+		return currUser.getName()
 
 # @app.get("/api/user")
 # async def get_user():

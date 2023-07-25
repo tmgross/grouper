@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 function Location() {
 
   const [locations, setLocations] = useState({});
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -17,13 +18,23 @@ function Location() {
   }, []);
 
   const handleLocation = async (locationId) => {
-    axios.get(`http://localhost:8000/api/user/${locationId}`)
+    axios.get(`http://localhost:8000/api/user/loco/${locationId}`)
       .then(res => {
         console.log(res.data);
         // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
       })
       .catch(e => console.log(e))
   };
+
+  const getUserName = async () => {
+    try {
+      const res = await axios.get('http://localhost:8000/api/username');
+      setUserName(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
 
   return (
@@ -50,11 +61,24 @@ function Location() {
                 <div class="button-container">
                   {Object.keys(locations).map(locationKey => (
                     <Link to="/location">
-                      <button key={locationKey} onClick={() => handleLocation('64b6bfbb54263d417e25e9d1')}>
-                        {/*locations[locationKey]*/locationKey} {locations[locationKey]}
+                      <button key={locationKey} onClick={() => handleLocation(locationKey)}>
+                        {/*locations[locationKey]*/locationKey}
                       </button>
                     </Link>
                   ))}
+                </div>
+            </div>
+
+            <div className="textbox-container">
+                <h2>{userName}</h2>
+                <div class="button-container">
+                  
+                    <Link to="/location">
+                      <button  onClick={() => handleLocation('64b6bfbb54263d417e25e9d1')}>
+                        value
+                      </button>
+                    </Link>
+                  
                 </div>
             </div>
         </div>
