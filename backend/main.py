@@ -11,6 +11,8 @@ from database import (
 	log_in_user,
 	getAllLocations,
 	getLocation,
+	removeUser,
+	addUserToLocation
 )
 
 # current user
@@ -75,42 +77,45 @@ async def getCurrLocation(locationId):
 	currLoco = await getLocation(locationId)
 	return currLoco
 
-@app.get("/api/user/loconame")
+@app.get("/api/user/location/loconame")
 async def getLocoName():
-	if currLoco is None or currLoco.getName() is None:
+	if not currLoco:
 		return "Error"
 	return currLoco.getName()
 
 @app.get("/api/username")
 async def getUserName():
-	if currUser is None:
+	if not currUser:
 		return "invalid user"
 	else:
 		return currUser.getName()
+
+@app.get("/api/location/users")
+async def getLocationUsers():
+	users = await currLoco.getCurrentUsers()
+	return users
+
+#removing a user from a location
+@app.delete("/api/user/remove")
+async def delete_user():
+	response = await removeUser(currUser,currLoco)
+	if response:
+		return "Successfully deleted user"
+	raise HTTPException(404, f"There is no user with the name {currUser.getName()}")
+
+# adding a user to a location
+@app.put("/api/user/adduser")
+async def joinLocation():
+	response = await addUserToLocation(currUser,currLoco)
+	if response:
+		return response
+	raise HTTPException(400, "Something went wrong")
 
 # @app.get("/api/user")
 # async def get_user():
 # 	response = await fetch_all_users()
 # 	return response
 
-'''
-#joining a location
-@app.put("/api/user/{locationid}")
-async def joinLocation(locationid):
-	response = await addUserToLocation(currUser,locationid)
-	if response:
-		return response
-	raise HTTPException(400, "Something went wrong")
-
-
-#removing a user from a location
-@app.delete("/api/user/")
-async def delete_user():
-	response = await remove_user(currUser)
-	if response:
-		return "Successfully deleted user"
-	raise HTTPException(404, f"There is no user with the name {currUser.getName()}")
-'''
 
 '''
 #creates an object for a specific location

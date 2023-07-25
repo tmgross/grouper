@@ -3,14 +3,19 @@ import asyncio
 from objects import User
 from objects import Location
 
-def add_test(name):
+def add_test(email, locoid):
     #loop = asyncio.get_event_loop()
     #loop.run_until_complete(database.create_user(name))
     #loop.close()
+    #loco.initialize()
+    #user.initialize()
     loop = asyncio.get_event_loop()
+    loco = loop.run_until_complete(database.getLocation(locoid))
+    user = loop.run_until_complete(database.log_in_user(email))
     try:
-        user = loop.run_until_complete(database.create_user(name))
-        assert(user!=None)
+        newid = loop.run_until_complete(database.addUserToLocation(user=user,location=loco))
+        print(newid)
+        #assert(user!=None)
     finally:
         loop.close()
     #asyncio.run(database.create_user(name))
@@ -19,18 +24,17 @@ def add_test(name):
     #assert(nm == name)
 
 
-def remove_test(name):
+def remove_test(email, locoid):
     #add_test(name)
     #asyncio.run(database.create_user(name))
     #users = database.fetch_one_user(name)
     #assert(len(users)>0)
 
     loop = asyncio.get_event_loop()
+    loco = loop.run_until_complete(database.getLocation(locoid))
+    user = loop.run_until_complete(database.log_in_user(email))
     try:
-        userid = loop.run_until_complete(database.create_user(name))
-        print(userid)
-        assert(userid!=None)
-        loop.run_until_complete(database.remove_user(name))
+        loop.run_until_complete(database.removeUser(user,loco))
     finally:
         loop.close()
     #asyncio.run(database.remove_user(name))
@@ -85,9 +89,20 @@ def testLoco2():
     finally:
         loop.close()
 
+def testLocoUsers(id):
+    loop = asyncio.get_event_loop()
+    try:
+        loco =Location(id)
+        val = loop.run_until_complete(loco.getCurrentUsers())
+        for l in val:
+            print(l)
+    finally:
+        loop.close()
+
 
 
 
 #login_test("test@test.com")
-testLocationGet("64b6bfbb54263d417e25e9d1")
+#testLocoUsers("64b6bfbb54263d417e25e9d1")
 #testLoco2()
+#remove_test("test@main.com","64b6bfbb54263d417e25e9d1")

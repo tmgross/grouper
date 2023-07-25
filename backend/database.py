@@ -28,6 +28,18 @@ async def log_in_user(email):
     await user.initialize()
     return user
 
+async def removeUser(user,location):
+    locoCollection = db.user_locations
+    result = await locoCollection.delete_one({"userEmail": user.getEmail(),"locationId":location.getId()})
+    return result
+
+async def addUserToLocation(user,location):
+    collection = db.user_locations
+    dict1 = {}
+    dict1 = {"userEmail": user.getEmail(),"locationId":str(location.getId()),"userName":user.getName()}
+    result = await collection.insert_one(dict1)
+    return result.inserted_id
+
 
 
 '''

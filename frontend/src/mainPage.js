@@ -62,23 +62,10 @@ function Location() {
                   {Object.keys(locations).map(locationKey => (
                     <Link to="/location">
                       <button key={locationKey} onClick={() => handleLocation(locationKey)}>
-                        {/*locations[locationKey]*/locationKey}
+                        {locations[locationKey]}
                       </button>
                     </Link>
                   ))}
-                </div>
-            </div>
-
-            <div className="textbox-container">
-                <h2>{userName}</h2>
-                <div class="button-container">
-                  
-                    <Link to="/location">
-                      <button  onClick={() => handleLocation('64b6bfbb54263d417e25e9d1')}>
-                        value
-                      </button>
-                    </Link>
-                  
                 </div>
             </div>
         </div>

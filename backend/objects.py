@@ -12,6 +12,8 @@ db = client.GroupWare
 class User:
     def __init__(self, email):
         self.email = email
+        self.name = ""
+        self.id = None
 
         #accesses the user_information collection
 
@@ -25,7 +27,7 @@ class User:
         # accesses the user_information collection
         userCollection = db.user_accounts
         document = await userCollection.find_one({"email": self.email})
-        self.name = document["name"]
+        self.name = str(document["name"])
         self.id = str(document["_id"])
 
     def getEmail(self):
@@ -60,7 +62,7 @@ class Location:
         document = await locoCollection.find_one({"_id": objInstance})
         print("Document = {document}")
         if document is not None:
-            self.name = document["name"]
+            self.name = str(document["name"])
             self.totalUsers = []
         
     def getId(self):
@@ -71,9 +73,20 @@ class Location:
             return "N/A"
         return self.name
 
-    def getCurrentUsers(self):
-        cursor = db.user_locations.find({'locationId': ObjectId(self.id)},{'name':1,'_id':0,'location':0})
-        return cursor
+    async def getCurrentUsers(self):
+        users = []
+        cursor = db.user_locations.find(
+            {'locationId': self.id},
+            
+        )
+        async for document in cursor:
+            if document.get("userName") is not None:
+                #print(document["userName"])
+                users.append(document["userName"])
+        if users:
+            return users
+        else:
+            return [""]
 
     def getTotalUsers(self):
         return self.totalUsers
