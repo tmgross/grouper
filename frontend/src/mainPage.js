@@ -1,10 +1,7 @@
 import './center.css';
 import Button from '@mui/material/Button';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { IconButton } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function MainPage() {
@@ -22,12 +19,13 @@ function MainPage() {
                     id="friendsTextBox"
                     rows="11"
                     cols="30"
-                    readonly
+                    readOnly
                     disabled
                     className='friends-list'
                     style={{  resize: 'none' }}
+                    value="This is a large text box that users can't edit."
+
                 >
-                This is a large text box that users can't edit.
                 </textarea>
             </div>
          

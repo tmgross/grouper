@@ -1,32 +1,48 @@
 import motor.motor_asyncio as motor
-from pymongo.server_api import ServerApi
 
-from objects import User
+from objects import *
 
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
-client = motor.AsyncIOMotorClient(uri, server_api=ServerApi('1'))
-#accesses the GroupWare database
+client = motor.AsyncIOMotorClient(uri)
 db = client.GroupWare
-#accesses the user_information collection
-collection = db.user_accounts
-
 
 
 async def create_new_user(email, name):
     #accesses the user_information collection
     userCollection = db.user_accounts
     dict1 = {"email": email ,"name": name}
-    result = await userCollection.insert_one(dict1)
-    print(result)
-    return result.inserted_id
+    try:
+        result = await userCollection.insert_one(dict1)
+        print(result)
+        return str(result.inserted_id)
+    except Exception as e:
+        print("Error occurred while creating user:", e)
+        return None
 
 
 async def log_in_user(email):
-    user = User(email)
-    await user.initialize()
-    print("*")
-    return user
+    try:
+        user = User(email)
+        await user.initialize()
+        return user
+    except Exception as e:
+        print("Error occurred while logging in:", e)
+        return None
+
+
+async def create_new_group(group):
+    #accesses the user_information collection
+    locoCollection = db.locations
+    dict1 = {"name": group}
+    try:
+        result = await locoCollection.insert_one(dict1)
+        print(result)
+        return str(result.inserted_id)
+    except Exception as e:
+        print("Error occurred while creating group:", e)
+        return None
+
 
 
 

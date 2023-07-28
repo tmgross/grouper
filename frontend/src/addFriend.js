@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
@@ -10,7 +9,6 @@ import './center.css';
 
 function AddFriendPage() {
   const [friend, setFriend] = useState('');
-  const navigate = useNavigate();
 
   const handleFriend = async () => {
     axios.get(`http://localhost:8000/api/user/${friend}`)
@@ -33,7 +31,7 @@ function AddFriendPage() {
           placeholder="Enter Friend Code"
           onChange={(e) => setFriend(e.target.value)}
         />
-        
+
 
           <div className="textbox-container">
                 <text>
