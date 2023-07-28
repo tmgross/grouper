@@ -20,7 +20,7 @@ function NewGroupPage() {
 
   return (
     <div className="centered">
-      <Link to="/" className="go-back-button">
+      <Link to="/main" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
       <h1 className="location">New Group</h1>
