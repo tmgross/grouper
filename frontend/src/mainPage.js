@@ -69,6 +69,11 @@ function Location() {
                 </div>
             </div>
         </div>
+        <div>
+          <Link to="/group">
+            <Button variant="contained" type="button" style={{width: '150px'}} >Create Group</Button>
+          </Link>
+        </div>
     </div>
   );
 }
