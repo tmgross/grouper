@@ -43,6 +43,17 @@ async def create_new_group(group):
         print("Error occurred while creating group:", e)
         return None
 
+async def removeUser(user,location):
+    locoCollection = db.user_locations
+    result = await locoCollection.delete_one({"userEmail": user.getEmail(),"locationId":location.getId()})
+    return result
+
+async def addUserToLocation(user,location):
+    collection = db.user_locations
+    dict1 = {}
+    dict1 = {"userEmail": user.getEmail(),"locationId":str(location.getId()),"userName":user.getName()}
+    result = await collection.insert_one(dict1)
+    return result.inserted_id
 
 
 
@@ -112,15 +123,24 @@ async def createNewLocation(name):
     dict1 = {"name":name}
     result = await locoCollection.insert_one(dict1)
     return result.inserted_id
-
+'''
 #returns the location based on id
 async def getLocation(id):
-    return Location(id)
+    loco = Location(str(id))
+    await loco.initialize()
+    print(loco.getName())
+    return loco
 
 # returns all of the locations in the locations database {id,name}
 async def getAllLocations():
     locoCollection = db.locations
     cursor = locoCollection.find()
-    return cursor
+    locos = {}
+    async for document in cursor:
+            if document.get("name") is not None:
+                locos[str(document["_id"])]=document["name"]
+                print(document["name"])
+    #for d in locos.keys():
+    #     print("id = ",d)
+    return locos
 
-'''

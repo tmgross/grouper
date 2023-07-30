@@ -1,10 +1,37 @@
 import './center.css';
-import Button from '@mui/material/Button';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 
 function Location() {
+
+  const [locations, setLocations] = useState({});
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    axios.get('http://localhost:8000/api/location/')
+      .then(res => setLocations(res.data))
+      .catch(e => console.log(e));
+  }, []);
+
+  const handleLocation = async (locationId) => {
+    axios.get(`http://localhost:8000/api/user/loco/${locationId}`)
+      .then(res => {
+        console.log(res.data);
+        // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
+      })
+      .catch(e => console.log(e))
+  };
+
+  // const getUserName = async () => {
+  //   try {
+  //     const res = await axios.get('http://localhost:8000/api/username');
+  //     setUserName(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="centered">
@@ -19,39 +46,28 @@ function Location() {
                     id="friendsTextBox"
                     rows="11"
                     cols="30"
-                    readOnly
+                    readonly
                     disabled
                     className='friends-list'
                     style={{  resize: 'none' }}
-                    value="This is a large text box that users can't edit."
-
                 >
+                This is a large text box that users can't edit.
                 </textarea>
             </div>
 
-            <div className="textbox-container" style={{marginLeft:'10px'}}>
+            <div className="textbox-container">
                 <h2>Your Groups</h2>
-                <div className="button-container">
-                    <button>Button 1</button>
-                    <button>Button 2</button>
-                    <button>Button 3</button>
-                    <button>Button 4</button>
+                <div class="button-container">
+                  {Object.keys(locations).map(locationKey => (
+                    <Link to="/location">
+                      <button key={locationKey} onClick={() => handleLocation(locationKey)}>
+                        {locations[locationKey]}
+                      </button>
+                    </Link>
+                  ))}
                 </div>
             </div>
         </div>
-
-        <div style={{marginTop:'10px'}}>
-          <Link to="/friends">
-            <Button variant="contained" type="button" style={{width: '150px', height: '60px', marginRight: '10px'}} >Add Friend</Button>
-          </Link>
-          <Link to="/invites">
-            <Button variant="contained" type="button" style={{width: '175px', height: '60px', marginRight: '10px'}} >Invites and Friend Requests</Button>
-          </Link>
-          <Link to="/group">
-            <Button variant="contained" type="button" style={{width: '150px', height: '60px'}} >Create Group</Button>
-          </Link>
-        </div>
-
     </div>
   );
 }
