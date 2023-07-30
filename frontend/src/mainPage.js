@@ -1,5 +1,4 @@
 import './center.css';
-import Button from '@mui/material/Button';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,7 +7,6 @@ import { Link } from 'react-router-dom';
 function Location() {
 
   const [locations, setLocations] = useState({});
-  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -26,14 +24,14 @@ function Location() {
       .catch(e => console.log(e))
   };
 
-  const getUserName = async () => {
-    try {
-      const res = await axios.get('http://localhost:8000/api/username');
-      setUserName(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getUserName = async () => {
+  //   try {
+  //     const res = await axios.get('http://localhost:8000/api/username');
+  //     setUserName(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 
 
@@ -55,7 +53,7 @@ function Location() {
                 This is a large text box that users can't edit.
                 </textarea>
             </div>
-         
+
             <div className="textbox-container">
                 <h2>Your Groups</h2>
                 <div class="button-container">
