@@ -33,10 +33,11 @@ function Location() {
   //   }
   // };
 
-
-
   return (
     <div className="centered">
+      <Link to="/" className="log-out-button">
+        <Button variant="contained" type="button">Log Out</Button>
+      </Link>
       <h1 className="location company-name">grouper</h1>
         <div style={{ display: 'flex' }}>
             <div className="textbox-container">

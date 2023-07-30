@@ -1,26 +1,14 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.cors import CORSMiddleware
-from starlette.middleware import Middleware
 import uvicorn
 
-from models import CreateUserRequest
-
-from database import (
-	create_new_user,
-	log_in_user,
-	getAllLocations,
-	getLocation,
-	removeUser,
-	addUserToLocation
-)
+from models import *
+from database import *
 
 # current user
-global currUser
-
-global currLoco
-
-
+global currUser, currLoco
+currUser = None
+currLoco = None
 
 # app object
 app = FastAPI()
@@ -34,13 +22,15 @@ origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3
 
 app.add_middleware(
 	CORSMiddleware,
-	#allow_origins=["http://localhost:3000"],
-	allow_origins=["*"],
+	allow_origins=origins,
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],
 )
 
+@app.get("/")
+async def read_root():
+	return {"Hello": "World"}
 
 #creating a new user
 @app.post("/api/user/")
@@ -56,13 +46,25 @@ async def new_user(request: CreateUserRequest):
 async def log_in(email: str):
 	global currUser
 	currUser = await log_in_user(email)
-	print(currUser.getName())
-	return currUser.getId()
+	print(currUser.getEmail())
+	if currUser.getId():
+		return currUser.getId()
+	raise HTTPException(status_code=404, detail="User")
 
+#creating a new group
+@app.post("/api/group/")
+async def new_group(request: CreateGroupRequest):
+	response = await create_new_group(request.group)
+	print(response)
+	if response:
+		return response
+	raise HTTPException(status_code=400, detail="Failed to create a new group")
 
-@app.get("/")
-async def read_root():
-	return {"Hello": "World"}
+# #getting all locations
+# @app.get("/api/location/")
+# async def getLocations():
+# 	response = await getAllLocations()
+# 	return response
 
 #getting all locations
 @app.get("/api/location/")
@@ -110,13 +112,7 @@ async def joinLocation():
 	if response:
 		return response
 	raise HTTPException(400, "Something went wrong")
-
-# @app.get("/api/user")
-# async def get_user():
-# 	response = await fetch_all_users()
-# 	return response
-
-
+  
 '''
 #creates an object for a specific location
 @app.get("/api/user/{locationid}")
@@ -135,4 +131,4 @@ if __name__ == "__main__":
         "main:app",
         reload=True
     )
-    
+

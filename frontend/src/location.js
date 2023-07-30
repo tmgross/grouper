@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -63,6 +63,7 @@ function location() {
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
       <h1 className="location">{locationName}</h1>
+
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <h2 style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>Who's Here?</h2>
         <textarea
@@ -74,6 +75,7 @@ function location() {
           style={{resize: 'none'}}
         >
           {getLocoUsers()}
+
         </textarea>
       </div>
       <div className="textbox-container">
