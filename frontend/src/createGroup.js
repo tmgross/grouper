@@ -31,7 +31,9 @@ function NewGroupPage() {
           placeholder="Enter Group Name"
           onChange={(e) => setGroup(e.target.value)}
         />
+        <Link to="/main">
           <Button variant="contained" type="button" onClick={handleNewGroup}>Create Group</Button>
+        </Link>
       </div>
     </div>
   );
