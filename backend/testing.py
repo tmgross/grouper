@@ -113,10 +113,30 @@ def testLocoUsers(id):
         loop.close()
 
 
+def testAddUserAccess(email,id):
+    loop = asyncio.get_event_loop()
+    try:
+        loco =Location(id)
+        val = loop.run_until_complete(loco.getCurrentUsers())
+        for l in val:
+            print(l)
+    finally:
+        loop.close()
+
+
+def testLocoFilter(email):
+    loop = asyncio.get_event_loop()
+    try:
+        user = loop.run_until_complete(database.log_in_user(email))
+        locos = loop.run_until_complete(database.get_all_locations(user))
+        print(locos)
+    finally:
+        loop.close()
+
 
 #remove_test("test@test.com","64bee34b6fa3a8c31741b6b0")
-auto_logout("test@test.com")
-
+#auto_logout("test@test.com")
+testLocoFilter("1234@321")
 
 
 #login_test("test@test.com")

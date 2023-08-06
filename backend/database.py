@@ -49,20 +49,26 @@ async def removeUser(user,location):
     return result.deleted_count
 
 
-async def removeUserAny(user):
+async def remove_user_any(user):
     locoCollection = db.user_locations
     result = await locoCollection.delete_one({"userEmail": user.getEmail()})
     return result.deleted_count
 
 
 async def addUserToLocation(user,location):
-    await removeUserAny(user)
+    await remove_user_any(user)
     collection = db.user_locations
     dict1 = {}
     dict1 = {"userEmail": user.getEmail(),"locationId":str(location.getId()),"userName":user.getName()}
     result = await collection.insert_one(dict1)
     return result.inserted_id
 
+async def add_user_access(user,location):
+    collection = db.user_access
+    dict = {}
+    dict = {"userid":user.getId(),"locationid":location.getId()}
+    result = await collection.insert_one(dict)
+    return result.inserted_id
 
 
 '''
@@ -152,3 +158,25 @@ async def getAllLocations():
     #     print("id = ",d)
     return locos
 
+
+
+
+async def get_all_locations(user):
+    accessCollection = db.user_access
+    #objid = ObjectId(user.getId())
+    locations = accessCollection.find({"userid": user.getId()})
+    accessable = [ObjectId(l["locationid"]) async for l in locations]
+    locoCollection = db.locations
+    filter = {"_id": { '$in': accessable }}
+    print(filter)
+    cursor = locoCollection.find(filter)
+    print(cursor)
+    locos = {}
+    async for document in cursor:
+            print(document)
+            if document.get("name") is not None:
+                locos[str(document["_id"])]=document["name"]
+                print(document["name"])
+    #for d in locos.keys():
+    #     print("id = ",d)
+    return locos

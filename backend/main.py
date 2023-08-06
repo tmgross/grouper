@@ -37,6 +37,8 @@ async def read_root():
 async def new_user(request: CreateUserRequest):
 	response = await create_new_user(request.email, request.name)
 	print(response)
+	global currUser
+	currUser = await log_in_user(request.email)
 	if response:
 		return response
 	raise HTTPException(status_code=400, detail="Failed to create a new user")
@@ -55,6 +57,9 @@ async def log_in(email: str):
 @app.post("/api/group/")
 async def new_group(request: CreateGroupRequest):
 	response = await create_new_group(request.group)
+	loco = await getLocation(response)
+	access = await add_user_access(currUser,loco)
+	print(access)
 	print(response)
 	if response:
 		return response
@@ -69,7 +74,7 @@ async def new_group(request: CreateGroupRequest):
 #getting all locations
 @app.get("/api/location/")
 async def getLocations():
-	response = await getAllLocations()
+	response = await get_all_locations(currUser)
 	return response
 
 #creates an object for a specific location
