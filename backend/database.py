@@ -46,9 +46,17 @@ async def create_new_group(group):
 async def removeUser(user,location):
     locoCollection = db.user_locations
     result = await locoCollection.delete_one({"userEmail": user.getEmail(),"locationId":location.getId()})
-    return result
+    return result.deleted_count
+
+
+async def removeUserAny(user):
+    locoCollection = db.user_locations
+    result = await locoCollection.delete_one({"userEmail": user.getEmail()})
+    return result.deleted_count
+
 
 async def addUserToLocation(user,location):
+    await removeUserAny(user)
     collection = db.user_locations
     dict1 = {}
     dict1 = {"userEmail": user.getEmail(),"locationId":str(location.getId()),"userName":user.getName()}

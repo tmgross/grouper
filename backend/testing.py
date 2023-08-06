@@ -52,6 +52,19 @@ def login_test(email):
     finally:
         loop.close()
 
+def auto_logout(email):
+    loop = asyncio.get_event_loop()
+    try:
+        user = loop.run_until_complete(database.log_in_user(email))
+        dele = loop.run_until_complete(database.removeUserAny(user))
+        print(dele)
+        print(user.getName())
+        print(user.getId())
+        assert(user!=None)
+    finally:
+        loop.close()
+
+
 
 def getLocos():
     loop = asyncio.get_event_loop()
@@ -99,6 +112,10 @@ def testLocoUsers(id):
     finally:
         loop.close()
 
+
+
+#remove_test("test@test.com","64bee34b6fa3a8c31741b6b0")
+auto_logout("test@test.com")
 
 
 
