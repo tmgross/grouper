@@ -70,9 +70,17 @@ function MainPage() {
             </div>
         </div>
         <div>
-          <Link to="/group">
-            <Button variant="contained" type="button" style={{width: '150px'}} >Create Group</Button>
-          </Link>
+          <div style={{marginTop:'10px'}}>
+            <Link to="/friends">
+              <Button variant="contained" type="button" style={{width: '150px', height: '60px', marginRight: '10px'}} >Add Friend</Button>
+            </Link>
+            <Link to="/invites">
+              <Button variant="contained" type="button" style={{width: '175px', height: '60px', marginRight: '10px'}} >Invites and Friend Requests</Button>
+            </Link>
+            <Link to="/group">
+              <Button variant="contained" type="button" style={{width: '150px', height: '60px'}} >Create Group</Button>
+            </Link>
+          </div>
         </div>
     </div>
   );
