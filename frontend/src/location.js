@@ -60,6 +60,11 @@ function location() {
       <Link to="/main" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
+      <Link to="/invitetogroup" className="log-out-button">
+        <Button variant="contained" type="button">
+          Invite People
+        </Button>
+      </Link>
       <h1 className="location">{locationName}</h1>
 
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -75,6 +80,14 @@ function location() {
           {getLocoUsers()}
         </textarea>
       </div>
+        <Button variant="contained" type="button"  style={{width: '140px', marginTop: '10px'}}
+        onClick={joinLocation}>
+          Join Group
+        </Button>
+        <Button variant="contained" type="button" style={{width: '140px', marginTop: '10px'}} 
+        onClick={removeUserHandler}>
+          Leave Group
+        </Button>
         <Button variant="contained" type="button" style={{width: '140px', marginTop: '10px'}} 
         onClick={handleRefresh}>
           Refresh
