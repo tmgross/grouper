@@ -31,25 +31,24 @@ function AddFriendPage() {
           placeholder="Enter Friend Code"
           onChange={(e) => setFriend(e.target.value)}
         />
-
-
           <div className="textbox-container">
                 <text>
                     This code belongs to:
                 </text>
                 <textarea
-                    id="friendsNameTextBox"
-                    readonly
-                    disabled
-                    className='friends-name'
-                    style={{  resize: 'none' }}
+                  id="friendsNameTextBox"
+                  readonly
+                  disabled
+                  className='friends-name'
+                  style={{  resize: 'none' }}
                 >
-                Friend Name
+                  Friend Name
                 </textarea>
             </div>
-
-
-          <Button variant="contained" type="button" style={{width: '200px'}} onClick={handleFriend}>Send Friend Request</Button>
+          <Button variant="contained" type="button" style={{width: '200px'}} 
+          onClick={handleFriend}>
+            Send Friend Request
+          </Button>
         </div>
     </div>
   );

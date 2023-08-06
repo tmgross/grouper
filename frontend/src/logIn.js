@@ -21,7 +21,6 @@ function LogInPage() {
       .catch(e => console.log(e))
   };
 
-
   return (
     <div className="centered">
       <Link to="/" className="go-back-button">
@@ -36,8 +35,12 @@ function LogInPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Link to="/main"> {/* REMOVE THIS ONCE THERE ARE NO ERRORS */}
-          <Button variant="contained" type="button" style={{width: '100px'}} onClick={handleLogin}>Log In</Button>
-        </Link>      </div>
+          <Button variant="contained" type="button" style={{width: '100px'}} 
+          onClick={handleLogin}>
+            Log In
+          </Button>
+        </Link>      
+      </div>
     </div>
   );
 }

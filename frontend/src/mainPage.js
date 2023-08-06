@@ -6,7 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
 function MainPage() {
-
   const [locations, setLocations] = useState({});
   const [friendCode, setFriendCode] = useState('');
   const [loading, setLoading] = useState(true); // Add a loading state
@@ -38,14 +37,16 @@ function MainPage() {
       .catch(e => console.log(e))
   };
 
-
   return (
     <div className="centered">
       <Link to="/" className="log-out-button">
-        <Button variant="contained" type="button">Log Out</Button>
+        <Button variant="contained" type="button">
+          Log Out
+        </Button>
       </Link>
       {!loading && (
-        <div className="go-back-button" style={{ fontFamily: '"Trebuchet MS", Helvetica, sans-serif', fontSize: '20px' }}>
+        <div className="go-back-button" style={{ fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
+        fontSize: '20px' }}>
           Friend Code: {friendCode}
         </div>
       )}
@@ -62,7 +63,7 @@ function MainPage() {
                   className='friends-list'
                   style={{  resize: 'none' }}
               >
-              This is a large text box that users can't edit.
+                This is a large text box that users can't edit.
               </textarea>
           </div>
 
@@ -82,13 +83,22 @@ function MainPage() {
       <div>
         <div style={{marginTop:'10px'}}>
           <Link to="/friends">
-            <Button variant="contained" type="button" style={{width: '150px', height: '60px', marginRight: '10px'}} >Add Friend</Button>
+            <Button variant="contained" type="button" 
+            style={{width: '150px', height: '60px', marginRight: '10px'}}>
+              Add Friend
+            </Button>
           </Link>
           <Link to="/invites">
-            <Button variant="contained" type="button" style={{width: '175px', height: '60px', marginRight: '10px'}} >Invites and Friend Requests</Button>
+            <Button variant="contained" type="button" 
+            style={{width: '175px', height: '60px', marginRight: '10px'}}>
+              Invites and Friend Requests
+            </Button>
           </Link>
           <Link to="/group">
-            <Button variant="contained" type="button" style={{width: '150px', height: '60px'}} >Create Group</Button>
+            <Button variant="contained" type="button" 
+            style={{width: '150px', height: '60px'}}>
+              Create Group
+            </Button>
           </Link>
         </div>
       </div>

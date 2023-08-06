@@ -36,7 +36,6 @@ function location() {
       .catch(e => console.log(e))
   };
 
-
   const getLocoUsers = async () => {
     try {
       const res = await axios.get('http://localhost:8000/api/location/users');
@@ -56,7 +55,6 @@ function location() {
     getLocoUsers();
   };
 
-
   return (
     <div className="centered">
       <Link to="/main" className="go-back-button">
@@ -75,26 +73,12 @@ function location() {
           style={{resize: 'none'}}
         >
           {getLocoUsers()}
-
         </textarea>
       </div>
-      <div className="textbox-container">
-        <input
-          className="form-control nameIn"
-          type="text"
-          placeholder="Enter Name"
-          onChange={event => setName(event.target.value)}
-        />
-        <Button variant="contained" type="button"  style={{width: '140px'}} onClick={joinLocation}>
-          Join Group
-        </Button>
-        <Button variant="contained" type="button" style={{width: '140px'}} onClick={removeUserHandler}>
-          Leave Group
-        </Button>
-        <Button variant="contained" type="button" style={{width: '140px'}} onClick={handleRefresh}>
+        <Button variant="contained" type="button" style={{width: '140px', marginTop: '10px'}} 
+        onClick={handleRefresh}>
           Refresh
         </Button>
-      </div>
     </div>
   );
 }

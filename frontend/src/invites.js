@@ -7,7 +7,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function InvitePage() {
-
   return (
     <div className="centered">
       <Link to="/main" className="go-back-button">
@@ -36,11 +35,20 @@ function InvitePage() {
                 </div>
             </div>
         </div>
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 2fr)', gap: '10px', marginLeft: '10px', marginTop: '10px'}} >
-          <Button variant="contained" type="button" style={{ width: '200px' }}>Accept Request</Button>
-          <Button variant="contained" type="button" style={{ width: '200px' }}>Accept Invite</Button>
-          <Button variant="contained" type="button" style={{ width: '200px' }}>Delete Request</Button>
-          <Button variant="contained" type="button" style={{ width: '200px' }}>Delete Invite</Button>
+        <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 2fr)', 
+                     gap: '10px', marginLeft: '10px', marginTop: '10px'}} >
+          <Button variant="contained" type="button" style={{ width: '200px' }}>
+            Accept Request
+          </Button>
+          <Button variant="contained" type="button" style={{ width: '200px' }}>
+            Accept Invite
+          </Button>
+          <Button variant="contained" type="button" style={{ width: '200px' }}>
+            Delete Request
+          </Button>
+          <Button variant="contained" type="button" style={{ width: '200px' }}>
+            Delete Invite
+          </Button>
         </div>
     </div>
   );
