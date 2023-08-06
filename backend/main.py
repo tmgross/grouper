@@ -92,8 +92,15 @@ async def getUserName():
 	else:
 		return currUser.getName()
 
+@app.get("/api/email")
+async def getUserEmail():
+	if not currUser:
+		return "invalid user"
+	else:
+		return currUser.getEmail()
+
 @app.get("/api/location/users")
-async def getLocationUsers():
+async def getLocationUsers():	
 	users = await currLoco.getCurrentUsers()
 	return users
 
