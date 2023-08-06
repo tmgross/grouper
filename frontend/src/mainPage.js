@@ -9,6 +9,7 @@ function MainPage() {
 
   const [locations, setLocations] = useState({});
   const [friendCode, setFriendCode] = useState('');
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -18,8 +19,14 @@ function MainPage() {
 
     // Fetch the current user's friend code from the server
     axios.get('http://localhost:8000/api/email')
-      .then(res => setFriendCode(res.data))
-      .catch(e => console.log(e));
+      .then(res => {
+        setFriendCode(res.data);
+        setLoading(false); // Set loading to false when the data is retrieved
+      })
+      .catch(e => {
+        console.log(e);
+        setLoading(false); // Set loading to false in case of an error
+      });
   }, []);
 
   const handleLocation = async (locationId) => {
@@ -37,9 +44,11 @@ function MainPage() {
       <Link to="/" className="log-out-button">
         <Button variant="contained" type="button">Log Out</Button>
       </Link>
-      <div className="go-back-button" style = {{ fontfamily: '"Trebuchet MS", Helvetica, sans-serif', fontSize: '20px'}}>
-        Friend Code: {friendCode}
-      </div>
+      {!loading && (
+        <div className="go-back-button" style={{ fontFamily: '"Trebuchet MS", Helvetica, sans-serif', fontSize: '20px' }}>
+          Friend Code: {friendCode}
+        </div>
+      )}
       <h1 className="location company-name">grouper</h1>
       <div style={{ display: 'flex' }}>
           <div className="textbox-container">
