@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function location() {
+function Location() {
   const [name, setName] = useState('');
   const [locationName, setLocationName] = useState('');
 
@@ -99,4 +99,4 @@ function location() {
   );
 }
 
-export default location;
+export default Location;
