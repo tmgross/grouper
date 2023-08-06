@@ -13,6 +13,8 @@ currLoco = None
 # app object
 app = FastAPI()
 
+
+
 origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3000", "https://localhost:3000/",]
 
 
@@ -25,7 +27,6 @@ app.add_middleware(
 	allow_methods=["*"],
 	allow_headers=["*"],
 )
-
 
 @app.get("/")
 async def read_root():
@@ -43,6 +44,7 @@ async def new_user(request: CreateUserRequest):
 #logging in the user
 @app.get("/api/user/{email}")
 async def log_in(email: str):
+	global currUser
 	currUser = await log_in_user(email)
 	print(currUser.getEmail())
 	if currUser.getId():
@@ -64,31 +66,53 @@ async def new_group(request: CreateGroupRequest):
 # 	response = await getAllLocations()
 # 	return response
 
+#getting all locations
+@app.get("/api/location/")
+async def getLocations():
+	response = await getAllLocations()
+	return response
 
-# @app.get("/api/user")
-# async def get_user():
-# 	response = await fetch_all_users()
-# 	return response
+#creates an object for a specific location
+@app.get("/api/user/loco/{locationId}")
+async def getCurrLocation(locationId):
+	global currLoco
+	currLoco = await getLocation(locationId)
+	return currLoco
 
-'''
-#joining a location
-@app.put("/api/user/{locationid}")
-async def joinLocation(locationid):
-	response = await addUserToLocation(currUser,locationid)
-	if response:
-		return response
-	raise HTTPException(400, "Something went wrong")
+@app.get("/api/user/location/loconame")
+async def getLocoName():
+	if not currLoco:
+		return "Error"
+	return currLoco.getName()
 
+@app.get("/api/username")
+async def getUserName():
+	if not currUser:
+		return "invalid user"
+	else:
+		return currUser.getName()
+
+@app.get("/api/location/users")
+async def getLocationUsers():
+	users = await currLoco.getCurrentUsers()
+	return users
 
 #removing a user from a location
-@app.delete("/api/user/")
+@app.delete("/api/user/remove")
 async def delete_user():
-	response = await remove_user(currUser)
+	response = await removeUser(currUser,currLoco)
 	if response:
 		return "Successfully deleted user"
 	raise HTTPException(404, f"There is no user with the name {currUser.getName()}")
-'''
 
+# adding a user to a location
+@app.put("/api/user/adduser")
+async def joinLocation():
+	response = await addUserToLocation(currUser,currLoco)
+	if response:
+		return response
+	raise HTTPException(400, "Something went wrong")
+  
 '''
 #creates an object for a specific location
 @app.get("/api/user/{locationid}")

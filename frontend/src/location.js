@@ -3,44 +3,79 @@ import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function location() {
   const [name, setName] = useState('');
+  const [locationName, setLocationName] = useState('');
 
-  const addUserHandler = () => {
+  const joinLocation = () => {
     axios
-      .post('http://localhost:8000/api/user/', { name: name })
-      .then(res => console.log(res))
+      .put('http://localhost:8000/api/user/adduser')
+      .then(res => {
+        console.log(res);
+        // Do something on successful join
+      })
       .catch(error => console.log(error));
   };
 
   const removeUserHandler = () => {
     axios
-      .post('http://localhost:8000/api/user/rm', { name: name })
+      .delete('http://localhost:8000/api/user/remove')
       .then(res => console.log(res))
       .catch(error => console.log(error));
   };
+
+  const getLocoName = async (locationid) => {
+    axios.get(`http://localhost:8000/api/user/location/loconame`)
+      .then(res => {
+        setLocationName(res.data); // Set the locationName state with the response data
+      })
+      .catch(e => console.log(e))
+  };
+
+
+  const getLocoUsers = async () => {
+    try {
+      const res = await axios.get('http://localhost:8000/api/location/users');
+      const users = res.data.join('\n'); // Join the array elements with newlines
+      document.getElementById('whosHereTextBox').value = users;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getLocoName();
+    getLocoUsers();
+  }, []);
+
+  const handleRefresh = () => {
+    getLocoUsers();
+  };
+
 
   return (
     <div className="centered">
       <Link to="/main" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
-      <h1 className="location">Union</h1>
+      <h1 className="location">{locationName}</h1>
+
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <h2 style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>Who's Here?</h2>
         <textarea
           id="whosHereTextBox"
           rows="10"
           cols="50"
-          readonly
+          readOnly
           disabled
           style={{resize: 'none'}}
         >
-          This is a large text box that users can't edit.
+          {getLocoUsers()}
+
         </textarea>
       </div>
       <div className="textbox-container">
@@ -50,11 +85,14 @@ function location() {
           placeholder="Enter Name"
           onChange={event => setName(event.target.value)}
         />
-        <Button variant="contained" type="button"  style={{width: '140px'}} onClick={addUserHandler}>
+        <Button variant="contained" type="button"  style={{width: '140px'}} onClick={joinLocation}>
           Join Group
         </Button>
         <Button variant="contained" type="button" style={{width: '140px'}} onClick={removeUserHandler}>
           Leave Group
+        </Button>
+        <Button variant="contained" type="button" style={{width: '140px'}} onClick={handleRefresh}>
+          Refresh
         </Button>
       </div>
     </div>
