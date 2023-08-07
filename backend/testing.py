@@ -2,6 +2,7 @@ import database
 import asyncio
 from objects import User
 from objects import Location
+from invite import GroupInvite
 
 def add_test(email, locoid):
     #loop = asyncio.get_event_loop()
@@ -133,12 +134,39 @@ def testLocoFilter(email):
     finally:
         loop.close()
 
+def testInvite(fromId, toEmail):
+    loop = asyncio.get_event_loop()
+    try:
+        ivt = GroupInvite(toEmail=toEmail,inviteFromId=fromId)
+        loop.run_until_complete(ivt.initialize())
+        user = loop.run_until_complete(ivt.addInvite())
+        #locos = loop.run_until_complete(database.get_all_locations(user))
+        print(user)
+        print(ivt.getGroupName())
+        result = loop.run_until_complete(ivt.acceptInvite())
+        print(result)
+    finally:
+        loop.close()
+
+def testGetAllInvites(userEmail):
+    loop = asyncio.get_event_loop()
+    try:
+        ivt = GroupInvite(toEmail=userEmail,inviteFromId="64bee34b6fa3a8c31741b6b0")
+        #loop.run_until_complete(ivt.initialize())
+        user = loop.run_until_complete(ivt.addInvite())
+        #print(user)
+        ivts = loop.run_until_complete(database.get_all_group_invites(userEmail))
+        #locos = loop.run_until_complete(database.get_all_locations(user))
+        for i in ivts:
+            print("location name: ",i.getGroupName())
+    finally:
+        loop.close()
 
 #remove_test("test@test.com","64bee34b6fa3a8c31741b6b0")
 #auto_logout("test@test.com")
-testLocoFilter("1234@321")
-
-
+#testLocoFilter("1234@321")
+#testInvite("64bee34b6fa3a8c31741b6b0","test@test.com")
+testGetAllInvites("test@test.com")
 #login_test("test@test.com")
 #testLocoUsers("64b6bfbb54263d417e25e9d1")
 #testLoco2()

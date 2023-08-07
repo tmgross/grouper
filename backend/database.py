@@ -1,6 +1,7 @@
 import motor.motor_asyncio as motor
 
 from objects import *
+from invite import *
 
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
@@ -69,6 +70,21 @@ async def add_user_access(user,location):
     dict = {"userid":user.getId(),"locationid":location.getId()}
     result = await collection.insert_one(dict)
     return result.inserted_id
+
+async def new_group_invite(toEmail,fromId):
+    ivt = GroupInvite(toEmail,fromId)
+    ivt.addInvite()
+
+async def get_all_group_invites(userEmail):
+    invites = []
+    collection = db.group_invites
+    cursor = collection.find({"toEmail":userEmail})
+    async for document in cursor:
+            print("ran")
+            ivt= GroupInvite(document["toEmail"],document["fromId"])
+            await ivt.initialize()
+            invites.append(ivt)
+    return invites
 
 
 '''
