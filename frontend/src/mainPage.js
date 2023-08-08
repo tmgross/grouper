@@ -38,7 +38,7 @@ function MainPage() {
   };
 
   return (
-    <div className="centered">
+    <div className="centered fade-in">
       <Link to="/" className="log-out-button">
         <Button variant="contained" type="button">
           Log Out

@@ -21,7 +21,7 @@ function SignUpPage() {
   };
 
   return (
-    <div className="centered">
+    <div className="centered fade-in">
       <Link to="/" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>

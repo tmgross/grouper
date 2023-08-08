@@ -7,6 +7,7 @@ import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import './center.css';
+import './transitions.css';
 
 function LogInPage() {
   const [email, setEmail] = useState('');
@@ -22,7 +23,7 @@ function LogInPage() {
   };
 
   return (
-    <div className="centered">
+    <div className="centered fade-in">
       <Link to="/" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
