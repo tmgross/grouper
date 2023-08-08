@@ -3,6 +3,7 @@ import asyncio
 from objects import User
 from objects import Location
 from invite import GroupInvite
+from invite import FriendInvite
 
 def add_test(email, locoid):
     #loop = asyncio.get_event_loop()
@@ -162,11 +163,29 @@ def testGetAllInvites(userEmail):
     finally:
         loop.close()
 
+
+
+def testFriendInvite(fromId,toEmail):
+    loop = asyncio.get_event_loop()
+    try:
+        ivt = FriendInvite(toEmail=toEmail,inviteFromId=fromId)
+        loop.run_until_complete(ivt.initialize())
+        user = loop.run_until_complete(ivt.addInvite())
+        #locos = loop.run_until_complete(database.get_all_locations(user))
+        print(user)
+        print(ivt.getFromName())
+        print(ivt.getToName())
+        result = loop.run_until_complete(ivt.acceptInvite())
+        print(result)
+    finally:
+        loop.close()
+
 #remove_test("test@test.com","64bee34b6fa3a8c31741b6b0")
 #auto_logout("test@test.com")
 #testLocoFilter("1234@321")
 #testInvite("64bee34b6fa3a8c31741b6b0","test@test.com")
-testGetAllInvites("test@test.com")
+#testGetAllInvites("test@test.com")
+testFriendInvite("64b98136ee31d004275ff579","test@test.com")
 #login_test("test@test.com")
 #testLocoUsers("64b6bfbb54263d417e25e9d1")
 #testLoco2()

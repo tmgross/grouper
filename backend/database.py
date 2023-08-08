@@ -72,7 +72,7 @@ async def add_user_access(user,location):
     return result.inserted_id
 
 async def new_group_invite(toEmail,fromId):
-    ivt = GroupInvite(toEmail,fromId)
+    ivt = GroupInvite(fromId,toEmail)
     ivt.addInvite()
 
 async def get_all_group_invites(userEmail):
@@ -81,7 +81,7 @@ async def get_all_group_invites(userEmail):
     cursor = collection.find({"toEmail":userEmail})
     async for document in cursor:
             print("ran")
-            ivt= GroupInvite(document["toEmail"],document["fromId"])
+            ivt= GroupInvite(document["fromId"],document["toEmail"])
             await ivt.initialize()
             invites.append(ivt)
     return invites
