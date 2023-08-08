@@ -194,6 +194,15 @@ def testGetAllFriendInvites(userEmail):
     finally:
         loop.close()
 
+def testGetAllFriends(userId):
+    loop = asyncio.get_event_loop()
+    try:
+        friends = loop.run_until_complete(database.get_all_friends(userId))
+        #locos = loop.run_until_complete(database.get_all_locations(user))
+        for i in friends:
+            print("Friend name: ",i)
+    finally:
+        loop.close()
 
 #remove_test("test@test.com","64bee34b6fa3a8c31741b6b0")
 #auto_logout("test@test.com")
@@ -201,8 +210,8 @@ def testGetAllFriendInvites(userEmail):
 #testInvite("64bee34b6fa3a8c31741b6b0","test@test.com")
 #testGetAllInvites("test@test.com")
 #testFriendInvite("64b98136ee31d004275ff579","test@test.com")
-testGetAllFriendInvites("test@test.com")
-
+#testGetAllFriendInvites("test@test.com")
+testGetAllFriends("64b6bcf554263d417e25e9d0")
 #login_test("test@test.com")
 #testLocoUsers("64b6bfbb54263d417e25e9d1")
 #testLoco2()

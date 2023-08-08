@@ -14,13 +14,10 @@ class GroupInvite:
     def __init__(self,  inviteFromId, toEmail):
         self.toEmail = toEmail
         self.fromId = inviteFromId
+        #stores which collection to store the invite in
         self.inviteCollection = db.group_invites
-        #initialize
-        #asyncio.create_task(self.initialize())
-        #self.initialize()
-        #await self.initialize()
-        #asyncio.run(self.initialize())
 
+    # pulls the needed data from the database
     async def initialize(self):
         print("GroupInvite.initialize()")
         # accesses the user_information collection
@@ -49,24 +46,31 @@ class GroupInvite:
     def getFromId(self):
         return self.fromId
 
+    # deletes the invite to the respective invite table (friends to friendInvite, group for GroupInvites)
+    #returns the number of rows deleted
     async def __deleteInvite(self):
         #inviteCollection = db.group_invites
         result = await self.inviteCollection.delete_one({"fromId": self.fromId,"toEmail":self.toEmail})
         return result.deleted_count
     
+    # adds the invite to the respective invite table (friends to friendInvite, group for GroupInvites)
+    #returns the Id of the new row in the table
     async def addInvite(self):
-        #inviteCollection = db.group_invites
         result = await self.inviteCollection.insert_one({"fromId": self.fromId,"toEmail":self.toEmail})
         return str(result.inserted_id)
         
+    # accepts the invite
+    # adds the user to the user_access tabel
+    # removes the invite from its table
     async def acceptInvite(self):
         collection = db.user_access
         dict = {}
         dict = {"userid":self.toId,"locationid":self.fromId}
         result = await collection.insert_one(dict)
-        await self.rejectInvite()
+        await self.__deleteInvite()
         return result.inserted_id
         
+    # calls the delete invite function could be expanded for messaging later
     async def rejectInvite(self):
         print("rejected")
         await self.__deleteInvite()
@@ -81,10 +85,12 @@ class FriendInvite(GroupInvite):
     def __init__(self, inviteFromId, toEmail):
         self.toEmail = toEmail
         self.fromId = inviteFromId
+        #stores which collection to store the invite in
         self.inviteCollection = db.friend_invites
 
+    #pulls the needed data for the object from the database
     async def initialize(self):
-        print("GroupInvite.initialize()")
+        print("FriendInvite.initialize()")
         # accesses the user_information collection
         userCollection = db.user_accounts
         print(self.fromId)
@@ -121,14 +127,21 @@ class FriendInvite(GroupInvite):
     async def addInvite(self):
         return await super().addInvite()
 
-
+    #adds the two users as friend and deletes the invite
+    # returns an array of size 2 for each of the new ids in the friends table
     async def acceptInvite(self):
+        results = []
         collection = db.friends
         dict = {}
         dict = {"userid":self.toId,"friendid":self.fromId}
         result = await collection.insert_one(dict)
-        await self.rejectInvite()
-        return result.inserted_id
+        results.append(str(result))
+        dict2 = {}
+        dict2 = {"userid":self.fromId,"friendid":self.toId}
+        result = await collection.insert_one(dict2)
+        results.append(str(result))
+        await self.__deleteInvite()
+        return results
     
     async def rejectInvite(self):
         return await super().rejectInvite()

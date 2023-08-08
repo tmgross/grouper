@@ -8,7 +8,10 @@ uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb
 client = motor.AsyncIOMotorClient(uri)
 db = client.GroupWare
 
-
+# takes an email and name of a user
+# inserts the information into the user accounts table
+# returns the row id of the new row if successful
+# throws an error if it failed
 async def create_new_user(email, name):
     #accesses the user_information collection
     userCollection = db.user_accounts
@@ -21,7 +24,9 @@ async def create_new_user(email, name):
         print("Error occurred while creating user:", e)
         return None
 
-
+# takes in the users email
+# creates a user object for that user
+# returns the user object if successful else it throws an error
 async def log_in_user(email):
     try:
         user = User(email)
@@ -31,7 +36,8 @@ async def log_in_user(email):
         print("Error occurred while logging in:", e)
         return None
 
-
+# takes the name of the new group
+# inserts the name into to locations table
 async def create_new_group(group):
     #accesses the user_information collection
     locoCollection = db.locations
@@ -49,32 +55,45 @@ async def removeUser(user,location):
     result = await locoCollection.delete_one({"userEmail": user.getEmail(),"locationId":location.getId()})
     return result.deleted_count
 
-
+# takes in a user
+# removes the user from the locations table
+# returns the number of rows deleted
 async def remove_user_any(user):
     locoCollection = db.user_locations
     result = await locoCollection.delete_one({"userEmail": user.getEmail()})
     return result.deleted_count
 
-
+# takes in a user and a location
+# adds the user to the location in the user locations table
+# returns the id of the newly created row
 async def addUserToLocation(user,location):
     await remove_user_any(user)
     collection = db.user_locations
     dict1 = {}
-    dict1 = {"userEmail": user.getEmail(),"locationId":str(location.getId()),"userName":user.getName()}
+    dict1 = {"userEmail": user.getEmail(),"locationId":str(location.getId()),"userName":user.getName(),"userid":user.getId()}
     result = await collection.insert_one(dict1)
-    return result.inserted_id
+    return str(result.inserted_id)
 
+# takes in a user and a location
+# adds that user to the user_access table along with the location
+# returns the id of the new row in the table
 async def add_user_access(user,location):
     collection = db.user_access
     dict = {}
     dict = {"userid":user.getId(),"locationid":location.getId()}
     result = await collection.insert_one(dict)
-    return result.inserted_id
+    return str(result.inserted_id)
 
-async def new_group_invite(toEmail,fromId):
+
+# takes in a Id of the group sending the invite and the Email of the user the invite is sent to
+#adds an invite into the group_invites table in the database
+async def new_group_invite(fromId,toEmail):
     ivt = GroupInvite(fromId,toEmail)
     ivt.addInvite()
 
+
+#takes in the current users email
+# gets all of the group invite objects that that user has in an array
 async def get_all_group_invites(userEmail):
     invites = []
     collection = db.group_invites
@@ -86,7 +105,8 @@ async def get_all_group_invites(userEmail):
             invites.append(ivt)
     return invites
 
-
+#takes in the email of the current user
+# returns a list of all of the friend invite objects the user has
 async def get_all_friend_invites(userEmail):
     invites = []
     collection = db.friend_invites
@@ -97,6 +117,28 @@ async def get_all_friend_invites(userEmail):
             await ivt.initialize()
             invites.append(ivt)
     return invites
+
+
+# takes the id of the user
+# gets ids of all of thier friends
+# uses those ids and the user_accounts table to get the info for each friend
+async def get_all_friends(userId):
+    friendIds = []
+    collection = db.friends
+    cursor = collection.find({"userid":userId})
+    async for document in cursor:
+            #print("ran")
+            friendIds.append(ObjectId(document["friendid"]))
+    filter = {"_id": { '$in': friendIds }}
+    users = db.user_accounts
+    cursor = users.find(filter)
+    friendNames = []
+    async for document in cursor:
+            print(document)
+            if document.get("name") is not None:
+                friendNames.append(document["name"])
+                print(document["name"])
+    return friendNames
 
 '''
 #finds all people with the given name in the user_information database
@@ -187,7 +229,9 @@ async def getAllLocations():
 
 
 
-
+# takes in a user object
+# finds all locations that that user has access to 
+# returns a dictionary of those locatios with id as the key and name as the value
 async def get_all_locations(user):
     accessCollection = db.user_access
     #objid = ObjectId(user.getId())
