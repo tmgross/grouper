@@ -57,7 +57,8 @@ async def log_in(email: str):
 @app.post("/api/group/")
 async def new_group(request: CreateGroupRequest):
 	response = await create_new_group(request.group)
-	loco = await getLocation(response)
+	loco = await get_location(response)
+	#adding the current users access to the group
 	access = await add_user_access(currUser,loco)
 	print(access)
 	print(response)
@@ -81,7 +82,7 @@ async def getLocations():
 @app.get("/api/user/loco/{locationId}")
 async def getCurrLocation(locationId):
 	global currLoco
-	currLoco = await getLocation(locationId)
+	currLoco = await get_location(locationId)
 	return currLoco
 
 @app.get("/api/user/location/loconame")
@@ -105,7 +106,7 @@ async def getLocationUsers():
 #removing a user from a location
 @app.delete("/api/user/remove")
 async def delete_user():
-	response = await removeUser(currUser,currLoco)
+	response = await remove_user(currUser,currLoco)
 	if response:
 		return "Successfully deleted user"
 	raise HTTPException(404, f"There is no user with the name {currUser.getName()}")
@@ -113,7 +114,7 @@ async def delete_user():
 # adding a user to a location
 @app.put("/api/user/adduser")
 async def joinLocation():
-	response = await addUserToLocation(currUser,currLoco)
+	response = await add_user_to_location(currUser,currLoco)
 	if response:
 		return response
 	raise HTTPException(400, "Something went wrong")

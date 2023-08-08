@@ -140,11 +140,11 @@ def testInvite(fromId, toEmail):
     try:
         ivt = GroupInvite(toEmail=toEmail,inviteFromId=fromId)
         loop.run_until_complete(ivt.initialize())
-        user = loop.run_until_complete(ivt.addInvite())
+        user = loop.run_until_complete(ivt.add_invite())
         #locos = loop.run_until_complete(database.get_all_locations(user))
         print(user)
-        print(ivt.getGroupName())
-        result = loop.run_until_complete(ivt.acceptInvite())
+        print(ivt.get_group_name())
+        result = loop.run_until_complete(ivt.accept_invite())
         print(result)
     finally:
         loop.close()
@@ -154,12 +154,12 @@ def testGetAllInvites(userEmail):
     try:
         ivt = GroupInvite(toEmail=userEmail,inviteFromId="64bee34b6fa3a8c31741b6b0")
         #loop.run_until_complete(ivt.initialize())
-        user = loop.run_until_complete(ivt.addInvite())
+        user = loop.run_until_complete(ivt.add_invite())
         #print(user)
         ivts = loop.run_until_complete(database.get_all_group_invites(userEmail))
         #locos = loop.run_until_complete(database.get_all_locations(user))
         for i in ivts:
-            print("location name: ",i.getGroupName())
+            print("location name: ",i.get_group_name())
     finally:
         loop.close()
 
@@ -169,12 +169,12 @@ def testFriendInvite(fromId,toEmail):
     try:
         ivt = FriendInvite(toEmail=toEmail,inviteFromId=fromId)
         loop.run_until_complete(ivt.initialize())
-        user = loop.run_until_complete(ivt.addInvite())
+        user = loop.run_until_complete(ivt.add_invite())
         #locos = loop.run_until_complete(database.get_all_locations(user))
         print(user)
-        print(ivt.getFromName())
-        print(ivt.getToName())
-        result = loop.run_until_complete(ivt.acceptInvite())
+        print(ivt.get_from_name())
+        print(ivt.get_to_name())
+        result = loop.run_until_complete(ivt.accept_invite())
         print(result)
     finally:
         loop.close()
@@ -184,13 +184,13 @@ def testGetAllFriendInvites(userEmail):
     try:
         ivt = FriendInvite(toEmail=userEmail,inviteFromId="64b98136ee31d004275ff579")
         #loop.run_until_complete(ivt.initialize())
-        user = loop.run_until_complete(ivt.addInvite())
+        user = loop.run_until_complete(ivt.add_invite())
         #print(user)
         ivts = loop.run_until_complete(database.get_all_friend_invites(userEmail))
         #locos = loop.run_until_complete(database.get_all_locations(user))
         for i in ivts:
-            print("Friend name: ",i.getFromName())
-        ivt.rejectInvite()
+            print("Friend name: ",i.get_from_name())
+        loop.run_until_complete(ivt.reject_invite())
     finally:
         loop.close()
 
@@ -210,8 +210,8 @@ def testGetAllFriends(userId):
 #testInvite("64bee34b6fa3a8c31741b6b0","test@test.com")
 #testGetAllInvites("test@test.com")
 #testFriendInvite("64b98136ee31d004275ff579","test@test.com")
-#testGetAllFriendInvites("test@test.com")
-testGetAllFriends("64b6bcf554263d417e25e9d0")
+testGetAllFriendInvites("test@test.com")
+#testGetAllFriends("64b6bcf554263d417e25e9d0")
 #login_test("test@test.com")
 #testLocoUsers("64b6bfbb54263d417e25e9d1")
 #testLoco2()

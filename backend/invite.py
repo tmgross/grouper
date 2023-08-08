@@ -31,49 +31,49 @@ class GroupInvite:
         self.toName = str(document["name"])
         self.toId = str(document["_id"])
     
-    def getGroupName(self):
+    def get_group_name(self):
         return self.fromName
     
-    def getToName(self):
+    def get_to_name(self):
         return self.toName
     
-    def getToEmail(self):
+    def get_to_email(self):
         return self.toEmail
     
-    def getToId(self):
+    def get_to_id(self):
         return self.toId
 
-    def getFromId(self):
+    def get_from_id(self):
         return self.fromId
 
     # deletes the invite to the respective invite table (friends to friendInvite, group for GroupInvites)
     #returns the number of rows deleted
-    async def __deleteInvite(self):
+    async def __delete_invite(self):
         #inviteCollection = db.group_invites
         result = await self.inviteCollection.delete_one({"fromId": self.fromId,"toEmail":self.toEmail})
         return result.deleted_count
     
     # adds the invite to the respective invite table (friends to friendInvite, group for GroupInvites)
     #returns the Id of the new row in the table
-    async def addInvite(self):
+    async def add_invite(self):
         result = await self.inviteCollection.insert_one({"fromId": self.fromId,"toEmail":self.toEmail})
         return str(result.inserted_id)
         
     # accepts the invite
     # adds the user to the user_access tabel
     # removes the invite from its table
-    async def acceptInvite(self):
+    async def accept_invite(self):
         collection = db.user_access
         dict = {}
         dict = {"userid":self.toId,"locationid":self.fromId}
         result = await collection.insert_one(dict)
-        await self.__deleteInvite()
+        await self.__delete_invite()
         return result.inserted_id
         
     # calls the delete invite function could be expanded for messaging later
-    async def rejectInvite(self):
+    async def reject_invite(self):
         print("rejected")
-        await self.__deleteInvite()
+        await self.__delete_invite()
         return
     
     
@@ -103,33 +103,33 @@ class FriendInvite(GroupInvite):
         self.toId = str(document["_id"])
 
 
-    def getFromName(self):
+    def get_from_name(self):
         return self.fromName
     
-    def getFromId(self):
-        return super().getFromId()
+    def get_from_id(self):
+        return super().get_from_id()
     
-    def getToEmail(self):
-        return super().getToEmail()
+    def get_to_email(self):
+        return super().get_to_email()
     
-    def getToId(self):
-        return super().getToId()
+    def get_to_id(self):
+        return super().get_to_id()
     
-    def getToName(self):
-        return super().getToName()
+    def get_to_name(self):
+        return super().get_to_name()
     
-    def getFromEmail(self):
+    def get_from_email(self):
         return self.fromEmail
 
-    async def __deleteInvite(self):
-        return await super().__deleteInvite()
+    async def __delete_invite(self):
+        return await super()._GroupInvite__delete_invite()
 
-    async def addInvite(self):
-        return await super().addInvite()
+    async def add_invite(self):
+        return await super().add_invite()
 
     #adds the two users as friend and deletes the invite
     # returns an array of size 2 for each of the new ids in the friends table
-    async def acceptInvite(self):
+    async def accept_invite(self):
         results = []
         collection = db.friends
         dict = {}
@@ -140,11 +140,11 @@ class FriendInvite(GroupInvite):
         dict2 = {"userid":self.fromId,"friendid":self.toId}
         result = await collection.insert_one(dict2)
         results.append(str(result))
-        await self.__deleteInvite()
+        await self.__delete_invite()
         return results
     
-    async def rejectInvite(self):
-        return await super().rejectInvite()
+    async def reject_invite(self):
+        return await super().reject_invite()
     
 
 

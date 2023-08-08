@@ -50,7 +50,7 @@ async def create_new_group(group):
         print("Error occurred while creating group:", e)
         return None
 
-async def removeUser(user,location):
+async def remove_user(user,location):
     locoCollection = db.user_locations
     result = await locoCollection.delete_one({"userEmail": user.getEmail(),"locationId":location.getId()})
     return result.deleted_count
@@ -66,7 +66,7 @@ async def remove_user_any(user):
 # takes in a user and a location
 # adds the user to the location in the user locations table
 # returns the id of the newly created row
-async def addUserToLocation(user,location):
+async def add_user_to_location(user,location):
     await remove_user_any(user)
     collection = db.user_locations
     dict1 = {}
@@ -208,7 +208,7 @@ async def createNewLocation(name):
     return result.inserted_id
 '''
 #returns the location based on id
-async def getLocation(id):
+async def get_location(id):
     loco = Location(str(id))
     await loco.initialize()
     print(loco.getName())
