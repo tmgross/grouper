@@ -164,7 +164,6 @@ def testGetAllInvites(userEmail):
         loop.close()
 
 
-
 def testFriendInvite(fromId,toEmail):
     loop = asyncio.get_event_loop()
     try:
@@ -180,12 +179,30 @@ def testFriendInvite(fromId,toEmail):
     finally:
         loop.close()
 
+def testGetAllFriendInvites(userEmail):
+    loop = asyncio.get_event_loop()
+    try:
+        ivt = FriendInvite(toEmail=userEmail,inviteFromId="64b98136ee31d004275ff579")
+        #loop.run_until_complete(ivt.initialize())
+        user = loop.run_until_complete(ivt.addInvite())
+        #print(user)
+        ivts = loop.run_until_complete(database.get_all_friend_invites(userEmail))
+        #locos = loop.run_until_complete(database.get_all_locations(user))
+        for i in ivts:
+            print("Friend name: ",i.getFromName())
+        ivt.rejectInvite()
+    finally:
+        loop.close()
+
+
 #remove_test("test@test.com","64bee34b6fa3a8c31741b6b0")
 #auto_logout("test@test.com")
 #testLocoFilter("1234@321")
 #testInvite("64bee34b6fa3a8c31741b6b0","test@test.com")
 #testGetAllInvites("test@test.com")
-testFriendInvite("64b98136ee31d004275ff579","test@test.com")
+#testFriendInvite("64b98136ee31d004275ff579","test@test.com")
+testGetAllFriendInvites("test@test.com")
+
 #login_test("test@test.com")
 #testLocoUsers("64b6bfbb54263d417e25e9d1")
 #testLoco2()

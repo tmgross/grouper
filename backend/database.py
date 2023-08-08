@@ -87,6 +87,17 @@ async def get_all_group_invites(userEmail):
     return invites
 
 
+async def get_all_friend_invites(userEmail):
+    invites = []
+    collection = db.friend_invites
+    cursor = collection.find({"toEmail":userEmail})
+    async for document in cursor:
+            print("ran")
+            ivt= FriendInvite(document["fromId"],document["toEmail"])
+            await ivt.initialize()
+            invites.append(ivt)
+    return invites
+
 '''
 #finds all people with the given name in the user_information database
 #input: the name of the person we want to find
