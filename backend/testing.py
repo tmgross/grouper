@@ -1,7 +1,7 @@
 import database
 import asyncio
 from objects import User
-from objects import Location
+from location import *
 from invite import GroupInvite
 from friendInvite import FriendInvite
 
@@ -12,7 +12,7 @@ def add_test(email, locoid):
     #loco.initialize()
     #user.initialize()
     loop = asyncio.get_event_loop()
-    loco = loop.run_until_complete(database.getLocation(locoid))
+    loco = loop.run_until_complete(database.get_location(locoid))
     user = loop.run_until_complete(database.log_in_user(email))
     try:
         newid = loop.run_until_complete(database.addUserToLocation(user=user,location=loco))
@@ -48,8 +48,8 @@ def login_test(email):
     loop = asyncio.get_event_loop()
     try:
         user = loop.run_until_complete(database.log_in_user(email))
-        print(user.getName())
-        print(user.getId())
+        print(user.get_name())
+        print(user.get_id())
         assert(user!=None)
     finally:
         loop.close()
@@ -60,8 +60,8 @@ def auto_logout(email):
         user = loop.run_until_complete(database.log_in_user(email))
         dele = loop.run_until_complete(database.removeUserAny(user))
         print(dele)
-        print(user.getName())
-        print(user.getId())
+        print(user.ge_name())
+        print(user.get_id())
         assert(user!=None)
     finally:
         loop.close()
@@ -85,7 +85,7 @@ def test_location_get(id):
     try:
         locos = loop.run_until_complete(database.getLocation(id))
         assert(locos!=None)
-        print(locos.getName())
+        print(locos.get_name())
         #for i in locos:
         #    print(i)
     finally:
@@ -99,8 +99,8 @@ def test_loco2():
         for l in locos.keys():
             val = loop.run_until_complete(database.getLocation(l))
             #print("123")
-            print(val.getId())
-            print(val.getName())
+            print(val.get_id())
+            print(val.get_name())
     finally:
         loop.close()
 

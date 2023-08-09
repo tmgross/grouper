@@ -6,6 +6,7 @@ from models import *
 from database import *
 from invite import *
 from friendInvite import *
+from location import *
 
 # current user
 global currUser, currLoco
@@ -50,9 +51,9 @@ async def new_user(request: CreateUserRequest):
 async def log_in(email: str):
 	global currUser
 	currUser = await log_in_user(email)
-	print(currUser.getEmail())
-	if currUser.getId():
-		return currUser.getId()
+	print(currUser.get_email())
+	if currUser.get_id():
+		return currUser.get_id()
 	raise HTTPException(status_code=404, detail="User")
 
 #creating a new group
@@ -92,18 +93,18 @@ async def getCurrLocation(locationId):
 async def getLocoName():
 	if not currLoco:
 		return "Error"
-	return currLoco.getName()
+	return currLoco.get_name()
 
 @app.get("/api/username")
 async def getUserName():
 	if not currUser:
 		return "invalid user"
 	else:
-		return currUser.getName()
+		return currUser.get_name()
 
 @app.get("/api/location/users")
 async def getLocationUsers():
-	users = await currLoco.getCurrentUsers()
+	users = await currLoco.get_current_users()
 	return users
 
 #removing a user from a location
@@ -112,7 +113,7 @@ async def delete_user():
 	response = await remove_user(currUser,currLoco)
 	if response:
 		return "Successfully deleted user"
-	raise HTTPException(404, f"There is no user with the name {currUser.getName()}")
+	raise HTTPException(404, f"There is no user with the name {currUser.get_name()}")
 
 # adding a user to a location
 @app.put("/api/user/adduser")

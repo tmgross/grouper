@@ -23,13 +23,13 @@ class User:
         self.name = str(document["name"])
         self.id = str(document["_id"])
 
-    def getEmail(self):
+    def get_email(self):
         return self.email
     
-    def getName(self):
+    def get_name(self):
         return self.name
     
-    def getId(self):
+    def get_id(self):
         return self.id
     
     # takes in the current users email
@@ -102,47 +102,3 @@ class User:
     
     
 
-
-class Location:
-    def __init__(self,id):
-        print(id)
-        self.id = str(id)
-        self.name= "N/A"
-        self.totalUsers = []
-
-    async def initialize(self):
-        #accesses the user_information collection
-        locoCollection = db.locations
-        print("id = ",self.id)
-        objInstance = ObjectId(self.id)
-        document = await locoCollection.find_one({"_id": objInstance})
-        print("Document = {document}")
-        if document is not None:
-            self.name = str(document["name"])
-            self.totalUsers = []
-        
-    def getId(self):
-        return self.id
-
-    def getName(self):
-        if(self.name is None):
-            return "N/A"
-        return self.name
-
-    async def getCurrentUsers(self):
-        users = []
-        cursor = db.user_locations.find(
-            {'locationId': self.id},
-            
-        )
-        async for document in cursor:
-            if document.get("userName") is not None:
-                #print(document["userName"])
-                users.append(document["userName"])
-        if users:
-            return users
-        else:
-            return [""]
-
-    def getTotalUsers(self):
-        return self.totalUsers

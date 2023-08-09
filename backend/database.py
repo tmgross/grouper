@@ -3,6 +3,7 @@ import motor.motor_asyncio as motor
 from objects import *
 from invite import *
 from friendInvite import *
+from location import *
 
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
@@ -53,7 +54,7 @@ async def create_new_group(group):
 
 async def remove_user(user,location):
     locoCollection = db.user_locations
-    result = await locoCollection.delete_one({"userEmail": user.getEmail(),"locationId":location.getId()})
+    result = await locoCollection.delete_one({"userEmail": user.get_email(),"locationId":location.get_id()})
     return result.deleted_count
 
 # takes in a user
@@ -61,7 +62,7 @@ async def remove_user(user,location):
 # returns the number of rows deleted
 async def remove_user_any(user):
     locoCollection = db.user_locations
-    result = await locoCollection.delete_one({"userEmail": user.getEmail()})
+    result = await locoCollection.delete_one({"userEmail": user.get_email()})
     return result.deleted_count
 
 # takes in a user and a location
@@ -71,7 +72,7 @@ async def add_user_to_location(user,location):
     await remove_user_any(user)
     collection = db.user_locations
     dict1 = {}
-    dict1 = {"userEmail": user.getEmail(),"locationId":str(location.getId()),"userName":user.getName(),"userid":user.getId()}
+    dict1 = {"userEmail": user.get_email(),"locationId":str(location.get_id()),"userName":user.get_name(),"userid":user.get_id()}
     result = await collection.insert_one(dict1)
     return str(result.inserted_id)
 
@@ -81,7 +82,7 @@ async def add_user_to_location(user,location):
 async def add_user_access(user,location):
     collection = db.user_access
     dict = {}
-    dict = {"userid":user.getId(),"locationid":location.getId()}
+    dict = {"userid":user.get_id(),"locationid":location.get_id()}
     result = await collection.insert_one(dict)
     return str(result.inserted_id)
 
@@ -212,7 +213,7 @@ async def createNewLocation(name):
 async def get_location(id):
     loco = Location(str(id))
     await loco.initialize()
-    print(loco.getName())
+    print(loco.get_name())
     return loco
 
 # returns all of the locations in the locations database {id,name}
@@ -236,7 +237,7 @@ async def getAllLocations():
 async def get_all_locations(user):
     accessCollection = db.user_access
     #objid = ObjectId(user.getId())
-    locations = accessCollection.find({"userid": user.getId()})
+    locations = accessCollection.find({"userid": user.get_id()})
     accessable = [ObjectId(l["locationid"]) async for l in locations]
     locoCollection = db.locations
     filter = {"_id": { '$in': accessable }}
