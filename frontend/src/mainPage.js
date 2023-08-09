@@ -9,7 +9,7 @@ function MainPage() {
   const [locations, setLocations] = useState({});
   const [friendCode, setFriendCode] = useState('');
   const [loading, setLoading] = useState(true); // Add a loading state
-
+  
   useEffect(() => {
     // Fetch data from the API when the component mounts
     axios.get('http://localhost:8000/api/location/')
@@ -28,6 +28,7 @@ function MainPage() {
       });
   }, []);
 
+  
   const handleLocation = async (locationId) => {
     axios.get(`http://localhost:8000/api/user/loco/${locationId}`)
       .then(res => {
@@ -37,6 +38,25 @@ function MainPage() {
       .catch(e => console.log(e))
   };
 
+  //get the friends list
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    // Fetch friends data from the API when the component mounts
+    axios.get('http://localhost:8000/api/friends/')
+      .then(res => setFriends(res.data))
+      .catch(e => console.log(e));
+  }, []);
+
+  // const getUserName = async () => {
+  //   try {
+  //     const res = await axios.get('http://localhost:8000/api/username');
+  //     setUserName(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  
   return (
     <div className="centered fade-in">
       <Link to="/" className="log-out-button">
@@ -51,18 +71,20 @@ function MainPage() {
         </div>
       )}
       <h1 className="location company-name">grouper</h1>
-      <div style={{ display: 'flex' }}>
-          <div className="textbox-container">
-              <h2>Your Friends</h2>
-              <textarea
-                  id="friendsTextBox"
-                  rows="11"
-                  cols="30"
-                  readonly
-                  disabled
-                  className='friends-list'
-                  style={{  resize: 'none' }}
-              >
+
+        <div style={{ display: 'flex' }}>
+            <div className="textbox-container">
+                <h2>Your Friends</h2>
+                <textarea
+                    id="friendsTextBox"
+                    rows="11"
+                    cols="30"
+                    readonly
+                    disabled
+                    className='friends-list'
+                    style={{  resize: 'none' }}
+                    value={friends.join('\n')}  /* Join the friends array with line breaks */
+                >
                 This is a large text box that users can't edit.
               </textarea>
           </div>
