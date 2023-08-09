@@ -21,7 +21,7 @@ function SignUpPage() {
   };
 
   return (
-    <div className="centered">
+    <div className="centered fade-in">
       <Link to="/" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
@@ -40,7 +40,10 @@ function SignUpPage() {
           onChange={(n) => setName(n.target.value)}
         />
         <Link to="/main"> {/* REMOVE THIS ONCE THERE ARE NO ERRORS */}
-          <Button variant="contained" type="button" style={{width: '100px'}} onClick={handleSignup}>Sign Up</Button>
+          <Button variant="contained" type="button" style={{width: '100px'}} 
+          onClick={handleSignup}>
+            Sign Up
+          </Button>
         </Link>
       </div>
     </div>

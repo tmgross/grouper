@@ -7,6 +7,7 @@ import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import './center.css';
+import './transitions.css';
 
 function LogInPage() {
   const [email, setEmail] = useState('');
@@ -21,9 +22,8 @@ function LogInPage() {
       .catch(e => console.log(e))
   };
 
-
   return (
-    <div className="centered">
+    <div className="centered fade-in">
       <Link to="/" className="go-back-button">
         <IconButton type="button"><ArrowBackIcon /></IconButton>
       </Link>
@@ -36,8 +36,12 @@ function LogInPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Link to="/main"> {/* REMOVE THIS ONCE THERE ARE NO ERRORS */}
-          <Button variant="contained" type="button" style={{width: '100px'}} onClick={handleLogin}>Log In</Button>
-        </Link>      </div>
+          <Button variant="contained" type="button" style={{width: '100px'}} 
+          onClick={handleLogin}>
+            Log In
+          </Button>
+        </Link>      
+      </div>
     </div>
   );
 }

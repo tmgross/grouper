@@ -8,6 +8,7 @@ import MainPage from './mainPage';
 import GroupPage from './createGroup';
 import FriendPage from './addFriend';
 import InvitePage from './invites';
+import GroupInvite from './groupInvite';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/group" element={<GroupPage />} />
         <Route exact path="/friends" element={<FriendPage />} />
         <Route exact path="/invites" element={<InvitePage />} />
+        <Route exact path="/invitetogroup" element={<GroupInvite />} />
       </Routes>
     </Router>
   );
