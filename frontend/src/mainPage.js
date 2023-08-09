@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 function Location() {
 
   const [locations, setLocations] = useState({});
-
+  
+  //get the location list
   useEffect(() => {
     // Fetch data from the API when the component mounts
     axios.get('http://localhost:8000/api/location/')
@@ -16,6 +17,7 @@ function Location() {
       .catch(e => console.log(e));
   }, []);
 
+  
   const handleLocation = async (locationId) => {
     axios.get(`http://localhost:8000/api/user/loco/${locationId}`)
       .then(res => {
@@ -24,6 +26,16 @@ function Location() {
       })
       .catch(e => console.log(e))
   };
+
+  //get the friends list
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    // Fetch friends data from the API when the component mounts
+    axios.get('http://localhost:8000/api/friends/')
+      .then(res => setFriends(res.data))
+      .catch(e => console.log(e));
+  }, []);
 
   // const getUserName = async () => {
   //   try {
@@ -51,6 +63,7 @@ function Location() {
                     disabled
                     className='friends-list'
                     style={{  resize: 'none' }}
+                    value={friends.join('\n')}  /* Join the friends array with line breaks */
                 >
                 This is a large text box that users can't edit.
                 </textarea>

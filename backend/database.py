@@ -2,6 +2,7 @@ import motor.motor_asyncio as motor
 
 from objects import *
 from invite import *
+from friendInvite import *
 
 #connection string.
 uri = "mongodb+srv://gavinbuier:IeljglDxt5Gew8U1@userinformation.g0x0e9q.mongodb.net/?retryWrites=true&w=majority"
@@ -91,7 +92,7 @@ async def new_group_invite(fromId,toEmail):
     ivt = GroupInvite(fromId,toEmail)
     ivt.addInvite()
 
-
+'''
 #takes in the current users email
 # gets all of the group invite objects that that user has in an array
 async def get_all_group_invites(userEmail):
@@ -139,7 +140,7 @@ async def get_all_friends(userId):
                 friendNames.append(document["name"])
                 print(document["name"])
     return friendNames
-
+'''
 '''
 #finds all people with the given name in the user_information database
 #input: the name of the person we want to find

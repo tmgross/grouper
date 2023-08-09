@@ -4,6 +4,8 @@ import uvicorn
 
 from models import *
 from database import *
+from invite import *
+from friendInvite import *
 
 # current user
 global currUser, currLoco
@@ -75,7 +77,8 @@ async def new_group(request: CreateGroupRequest):
 #getting all locations
 @app.get("/api/location/")
 async def getLocations():
-	response = await get_all_locations(currUser)
+	response = await currUser.get_locations()
+	#response = await get_all_locations(currUser)
 	return response
 
 #creates an object for a specific location
@@ -118,6 +121,20 @@ async def joinLocation():
 	if response:
 		return response
 	raise HTTPException(400, "Something went wrong")
+
+
+@app.get("/api/friends/")
+async def get_friends():
+	friendsList = await currUser.get_friends()
+	return friendsList
+
+@app.get("/api/invites/friends")
+async def get_friend_invites():
+	return await currUser.get_friend_invites()
+
+@app.get("/api/invites/friends")
+async def get_group_invites():
+	return await currUser.get_group_invites()
   
 '''
 #creates an object for a specific location

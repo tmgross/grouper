@@ -3,7 +3,7 @@ import asyncio
 from objects import User
 from objects import Location
 from invite import GroupInvite
-from invite import FriendInvite
+from friendInvite import FriendInvite
 
 def add_test(email, locoid):
     #loop = asyncio.get_event_loop()
@@ -68,7 +68,7 @@ def auto_logout(email):
 
 
 
-def getLocos():
+def get_locos():
     loop = asyncio.get_event_loop()
     try:
         locos = loop.run_until_complete(database.getAllLocations())
@@ -80,7 +80,7 @@ def getLocos():
         loop.close()
 
 
-def testLocationGet(id):
+def test_location_get(id):
     loop = asyncio.get_event_loop()
     try:
         locos = loop.run_until_complete(database.getLocation(id))
@@ -92,7 +92,7 @@ def testLocationGet(id):
         loop.close()
 
 
-def testLoco2():
+def test_loco2():
     loop = asyncio.get_event_loop()
     try:
         locos = loop.run_until_complete(database.getAllLocations())
@@ -104,7 +104,7 @@ def testLoco2():
     finally:
         loop.close()
 
-def testLocoUsers(id):
+def test_loco_users(id):
     loop = asyncio.get_event_loop()
     try:
         loco =Location(id)
@@ -115,7 +115,7 @@ def testLocoUsers(id):
         loop.close()
 
 
-def testAddUserAccess(email,id):
+def test_add_user_access(email,id):
     loop = asyncio.get_event_loop()
     try:
         loco =Location(id)
@@ -126,7 +126,7 @@ def testAddUserAccess(email,id):
         loop.close()
 
 
-def testLocoFilter(email):
+def test_loco_filter(email):
     loop = asyncio.get_event_loop()
     try:
         user = loop.run_until_complete(database.log_in_user(email))
@@ -135,7 +135,7 @@ def testLocoFilter(email):
     finally:
         loop.close()
 
-def testInvite(fromId, toEmail):
+def test_invite(fromId, toEmail):
     loop = asyncio.get_event_loop()
     try:
         ivt = GroupInvite(toEmail=toEmail,inviteFromId=fromId)
@@ -149,14 +149,15 @@ def testInvite(fromId, toEmail):
     finally:
         loop.close()
 
-def testGetAllInvites(userEmail):
+def test_get_group_invites(userEmail):
     loop = asyncio.get_event_loop()
     try:
         ivt = GroupInvite(toEmail=userEmail,inviteFromId="64bee34b6fa3a8c31741b6b0")
         #loop.run_until_complete(ivt.initialize())
         user = loop.run_until_complete(ivt.add_invite())
         #print(user)
-        ivts = loop.run_until_complete(database.get_all_group_invites(userEmail))
+        user = loop.run_until_complete(database.log_in_user(userEmail))
+        ivts = loop.run_until_complete(user.get_group_invites())
         #locos = loop.run_until_complete(database.get_all_locations(user))
         for i in ivts:
             print("location name: ",i.get_group_name())
@@ -164,7 +165,7 @@ def testGetAllInvites(userEmail):
         loop.close()
 
 
-def testFriendInvite(fromId,toEmail):
+def test_friend_invite(fromId,toEmail):
     loop = asyncio.get_event_loop()
     try:
         ivt = FriendInvite(toEmail=toEmail,inviteFromId=fromId)
@@ -179,14 +180,15 @@ def testFriendInvite(fromId,toEmail):
     finally:
         loop.close()
 
-def testGetAllFriendInvites(userEmail):
+def test_get_all_friend_invites(userEmail):
     loop = asyncio.get_event_loop()
     try:
         ivt = FriendInvite(toEmail=userEmail,inviteFromId="64b98136ee31d004275ff579")
         #loop.run_until_complete(ivt.initialize())
         user = loop.run_until_complete(ivt.add_invite())
         #print(user)
-        ivts = loop.run_until_complete(database.get_all_friend_invites(userEmail))
+        user = loop.run_until_complete(database.log_in_user(userEmail))
+        ivts = loop.run_until_complete(user.get_friend_invites())
         #locos = loop.run_until_complete(database.get_all_locations(user))
         for i in ivts:
             print("Friend name: ",i.get_from_name())
@@ -194,10 +196,11 @@ def testGetAllFriendInvites(userEmail):
     finally:
         loop.close()
 
-def testGetAllFriends(userId):
+def test_get_all_friends(userEmail):
     loop = asyncio.get_event_loop()
     try:
-        friends = loop.run_until_complete(database.get_all_friends(userId))
+        user = loop.run_until_complete(database.log_in_user(userEmail))
+        friends = loop.run_until_complete(user.get_friends())
         #locos = loop.run_until_complete(database.get_all_locations(user))
         for i in friends:
             print("Friend name: ",i)
@@ -206,13 +209,13 @@ def testGetAllFriends(userId):
 
 #remove_test("test@test.com","64bee34b6fa3a8c31741b6b0")
 #auto_logout("test@test.com")
-#testLocoFilter("1234@321")
-#testInvite("64bee34b6fa3a8c31741b6b0","test@test.com")
-#testGetAllInvites("test@test.com")
-#testFriendInvite("64b98136ee31d004275ff579","test@test.com")
-testGetAllFriendInvites("test@test.com")
-#testGetAllFriends("64b6bcf554263d417e25e9d0")
+#test_loco_filter("1234@321")
+#test_invite("64bee34b6fa3a8c31741b6b0","test@test.com")
+#test_get_group_invites("test@test.com")
+#test_friend_invite("64b98136ee31d004275ff579","test@test.com")
+#test_get_all_friend_invites("test@test.com")
+test_get_all_friends("test@test.com")
 #login_test("test@test.com")
-#testLocoUsers("64b6bfbb54263d417e25e9d1")
-#testLoco2()
+#test_loco_users("64b6bfbb54263d417e25e9d1")
+#test_loco2()
 #remove_test("test@main.com","64b6bfbb54263d417e25e9d1")
