@@ -132,7 +132,7 @@ async def get_friends():
 async def get_friend_invites():
 	return await currUser.get_friend_invites()
 
-@app.get("/api/invites/friends")
+@app.get("/api/invites/groups")
 async def get_group_invites():
 	return await currUser.get_group_invites()
   
