@@ -9,11 +9,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './center.css';
 
 function NewGroupPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [group, setGroup] = useState('');
   // const navigate = useNavigate();
 
   const handleNewGroup = async () => {
-    axios.post(`http://localhost:8000/api/group/`, {group})
+    axios.post(`${backendUrl}/api/group/`, {group})
       .then(res => console.log(res.data))
       .catch(e => console.log(e))
   };

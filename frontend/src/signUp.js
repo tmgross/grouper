@@ -8,11 +8,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './center.css';
 
 function SignUpPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
   const handleSignup = () => {
-    axios.post(`http://localhost:8000/api/user/`, {email, name})
+    axios.post(`${backendUrl}/api/user/`, {email, name})
       .then(res => {
         console.log(res.data);
         //navigate('/main'); UNCOMMENT THIS ONCE THERE ARE NO VALIDATION ERRORS

@@ -6,18 +6,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
 function MainPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const [locations, setLocations] = useState({});
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    axios.get('http://localhost:8000/api/location/')
+    axios.get(`${backendUrl}/api/location/`)
       .then(res => setLocations(res.data))
       .catch(e => console.log(e));
   }, []);
 
   const handleLocation = async (locationId) => {
-    axios.get(`http://localhost:8000/api/user/loco/${locationId}`)
+    axios.get(`${backendUrl}/api/user/loco/${locationId}`)
       .then(res => {
         console.log(res.data);
         // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
@@ -27,7 +28,7 @@ function MainPage() {
 
   // const getUserName = async () => {
   //   try {
-  //     const res = await axios.get('http://localhost:8000/api/username');
+  //     const res = await axios.get('${backendUrl}/api/username');
   //     setUserName(res.data);
   //   } catch (error) {
   //     console.log(error);

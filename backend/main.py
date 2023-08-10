@@ -15,7 +15,7 @@ app = FastAPI()
 
 
 
-origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3000", "https://localhost:3000/",]
+origins = ["http://localhost:3000","http://localhost:3000/", "https://groupersdd.netlify.app/"]
 
 
 # middleware acts as a bridge between database and application
@@ -112,7 +112,7 @@ async def joinLocation():
 	if response:
 		return response
 	raise HTTPException(400, "Something went wrong")
-  
+
 '''
 #creates an object for a specific location
 @app.get("/api/user/{locationid}")

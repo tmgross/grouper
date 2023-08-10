@@ -8,12 +8,14 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Location() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [name, setName] = useState('');
   const [locationName, setLocationName] = useState('');
 
   const joinLocation = () => {
     axios
-      .put('http://localhost:8000/api/user/adduser')
+      .put('${backendUrl}/api/user/adduser')
       .then(res => {
         console.log(res);
         // Do something on successful join
@@ -23,13 +25,13 @@ function Location() {
 
   const removeUserHandler = () => {
     axios
-      .delete('http://localhost:8000/api/user/remove')
+      .delete('${backendUrl}/api/user/remove')
       .then(res => console.log(res))
       .catch(error => console.log(error));
   };
 
   const getLocoName = async (locationid) => {
-    axios.get(`http://localhost:8000/api/user/location/loconame`)
+    axios.get(`${backendUrl}/api/user/location/loconame`)
       .then(res => {
         setLocationName(res.data); // Set the locationName state with the response data
       })
@@ -39,7 +41,7 @@ function Location() {
 
   const getLocoUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/location/users');
+      const res = await axios.get('${backendUrl}/api/location/users');
       const users = res.data.join('\n'); // Join the array elements with newlines
       document.getElementById('whosHereTextBox').value = users;
     } catch (error) {

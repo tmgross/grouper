@@ -9,11 +9,13 @@ import Button from '@mui/material/Button';
 import './center.css';
 
 function LogInPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [email, setEmail] = useState('');
   // const navigate = useNavigate();
 
   const handleLogin = async () => {
-    axios.get(`http://localhost:8000/api/user/${email}`)
+    axios.get(`${backendUrl}/api/user/${email}`)
       .then(res => {
         console.log(res.data);
         // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS

@@ -8,10 +8,12 @@ import Button from '@mui/material/Button';
 import './center.css';
 
 function AddFriendPage() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [friend, setFriend] = useState('');
 
   const handleFriend = async () => {
-    axios.get(`http://localhost:8000/api/user/${friend}`)
+    axios.get(`${backendUrl}/api/user/${friend}`)
       .then(res => {
         console.log(res.data);
       })
