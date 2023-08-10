@@ -1,66 +1,66 @@
 .centered {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .location {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .textbox-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .textbox-container input,
 .textbox-container button {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .go-back-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
 
 .log-out-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 h1 {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 h2 {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 .name {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 80px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 80px;
 }
 
 .company-name {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 40px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 40px;
 }
 
 .slogan {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
-  font-style: italic;
-  font-size: 25px;
-  margin-left: 300px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 25px;
+    margin-left: 300px;
 }
 
 .name-container {
@@ -69,64 +69,70 @@ h2 {
 }
 
 .button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Left-justify the buttons */
-  justify-content: center; /* Center the buttons vertically */
-  border: 2px solid #ccc;
-  padding: 10px;
-  border-radius: 10px; 
-  width: 300px; 
-  height: 300px;
-  overflow: auto; /* Add scrollbars if buttons overflow the box */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Left-justify the buttons */
+    justify-content: center;
+    /* Center the buttons vertically */
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+    height: 300px;
+    overflow: auto;
+    /* Add scrollbars if buttons overflow the box */
 }
 
 /* Styling for individual buttons */
 .button-container button {
-  border: none;
-  background: none;
-  margin: 0;
-  padding: 0;
-  font-size: 20px;
-  color: #000;
-  cursor: pointer;
-  text-align: left; /* Left-justify the text inside the buttons */
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    color: #000;
+    cursor: pointer;
+    text-align: left;
+    /* Left-justify the text inside the buttons */
 }
 
-.button-container button + button {
-  margin-top: 5px;
+.button-container button+button {
+    margin-top: 5px;
 }
 
 .friends-list {
-  border: 2px solid #ccc;
-  border-radius: 10px; 
-  padding: 10px;
-  width: 300px; 
-  height: 300px;
-  overflow: auto; /* Add scrollbars if buttons overflow the box */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 300px;
+    height: 300px;
+    overflow: auto;
+    /* Add scrollbars if buttons overflow the box */
 }
 
 .friends-name {
-  border: 2px solid #ccc;
-  border-radius: 10px; 
-  padding: 10px;
-  width: 220px; 
-  height: 50px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 220px;
+    height: 50px;
 }
 
 .highlight-on-hover {
-  /* Add styles for the normal state of the button */
-  background-color: #f0f0f0;
-  color: #333;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+    /* Add styles for the normal state of the button */
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 
-  /* Add styles for the hover state of the button */
-  transition: background-color 0.3s ease;
+    /* Add styles for the hover state of the button */
+    transition: background-color 0.3s ease;
 }
 
 .highlight-on-hover:hover {
-  background-color: #ddd; /* Change to the desired highlight color */
+    background-color: #ddd;
+    /* Change to the desired highlight color */
 }
