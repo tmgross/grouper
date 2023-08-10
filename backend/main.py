@@ -18,7 +18,7 @@ app = FastAPI()
 
 
 
-origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3000", "https://localhost:3000/",]
+origins = ["http://localhost:3000","http://localhost:3000/", "https://groupersdd.netlify.app/",]
 
 
 # middleware acts as a bridge between database and application
