@@ -5,6 +5,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
+// Component for the main page
 function MainPage() {
     const [locations, setLocations] = useState({});
     const [friendCode, setFriendCode] = useState('');
@@ -28,7 +29,6 @@ function MainPage() {
             });
     }, []);
 
-
     const handleLocation = async (locationId) => {
         axios.get(`http://localhost:8000/api/user/loco/${locationId}`)
             .then(res => {
@@ -38,7 +38,7 @@ function MainPage() {
             .catch(e => console.log(e))
     };
 
-    //get the friends list
+    // Get the friends list
     const [friends, setFriends] = useState([]);
 
     useEffect(() => {
@@ -48,22 +48,15 @@ function MainPage() {
             .catch(e => console.log(e));
     }, []);
 
-    // const getUserName = async () => {
-    //   try {
-    //     const res = await axios.get('http://localhost:8000/api/username');
-    //     setUserName(res.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
     return (
         <div className="centered fade-in">
+            {/* Link to log out */}
             <Link to="/" className="log-out-button">
                 <Button variant="contained" type="button">
                     Log Out
                 </Button>
             </Link>
+            {/* Display friend code */}
             {!loading && (
                 <div className="go-back-button" style={{
                     fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
@@ -72,28 +65,34 @@ function MainPage() {
                     Friend Code: {friendCode}
                 </div>
             )}
+            {/* Application title */}
             <h1 className="location company-name">grouper</h1>
 
             <div style={{ display: 'flex' }}>
+                {/* Container for displaying friends */}
                 <div className="textbox-container">
                     <h2>Your Friends</h2>
+                    {/* Textarea to show friends */}
                     <textarea
                         id="friendsTextBox"
                         rows="11"
                         cols="30"
-                        readonly
+                        readOnly
                         disabled
                         className='friends-list'
                         style={{ resize: 'none' }}
                         value={friends.join('\n')}  /* Join the friends array with line breaks */
                     >
+                        {/* Placeholder text */}
                         This is a large text box that users can't edit.
                     </textarea>
                 </div>
 
+                {/* Container for displaying groups */}
                 <div className="textbox-container">
                     <h2>Your Groups</h2>
-                    <div class="button-container">
+                    <div className="button-container">
+                        {/* Display the list of groups */}
                         {Object.keys(locations).map(locationKey => (
                             <Link to="/location">
                                 <button key={locationKey} onClick={() => handleLocation(locationKey)}>
@@ -106,6 +105,7 @@ function MainPage() {
             </div>
             <div>
                 <div style={{ marginTop: '10px' }}>
+                    {/* Buttons for navigating to different pages */}
                     <Link to="/friends">
                         <Button variant="contained" type="button"
                             style={{ width: '150px', height: '60px', marginRight: '10px' }}>

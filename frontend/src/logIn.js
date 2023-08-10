@@ -9,32 +9,39 @@ import Button from '@mui/material/Button';
 import './center.css';
 import './transitions.css';
 
+// Component for user login
 function LogInPage() {
     const [email, setEmail] = useState('');
     // const navigate = useNavigate();
 
+    // Function to handle user login
     const handleLogin = async () => {
-        axios.get(`http://localhost:8000/api/user/${email}`)
-            .then(res => {
-                console.log(res.data);
-                // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
-            })
-            .catch(e => console.log(e))
+        try {
+            const response = await axios.get(`http://localhost:8000/api/user/${email}`);
+            console.log(response.data);
+            // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
         <div className="centered fade-in">
+            {/* Link to navigate back */}
             <Link to="/" className="go-back-button">
                 <IconButton type="button"><ArrowBackIcon /></IconButton>
             </Link>
+            {/* Page header */}
             <h1 className="location">Log In</h1>
             <div className="textbox-container">
+                {/* Input field for entering email */}
                 <input
                     className="form-control nameIn"
                     type="text"
                     placeholder="Enter Email"
                     onChange={(e) => setEmail(e.target.value)}
                 />
+                {/* Button to initiate login */}
                 <Link to="/main"> {/* REMOVE THIS ONCE THERE ARE NO ERRORS */}
                     <Button variant="contained" type="button" style={{ width: '100px' }}
                         onClick={handleLogin}>

@@ -7,10 +7,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function location() {
+// Component for managing the current location
+function Location() {
     const [name, setName] = useState('');
     const [locationName, setLocationName] = useState('');
 
+    // Function to join the current location
     const joinLocation = () => {
         axios
             .put('http://localhost:8000/api/user/adduser')
@@ -21,6 +23,7 @@ function location() {
             .catch(error => console.log(error));
     };
 
+    // Function to remove the current user from the location
     const removeUserHandler = () => {
         axios
             .delete('http://localhost:8000/api/user/remove')
@@ -28,6 +31,7 @@ function location() {
             .catch(error => console.log(error));
     };
 
+    // Function to get the location's name
     const getLocoName = async (locationid) => {
         axios.get(`http://localhost:8000/api/user/location/loconame`)
             .then(res => {
@@ -36,6 +40,7 @@ function location() {
             .catch(e => console.log(e))
     };
 
+    // Function to get the users in the current location
     const getLocoUsers = async () => {
         try {
             const res = await axios.get('http://localhost:8000/api/location/users');
@@ -46,17 +51,20 @@ function location() {
         }
     };
 
+    // Initial data retrieval
     useEffect(() => {
         getLocoName();
         getLocoUsers();
     }, []);
 
+    // Function to handle refreshing the user list
     const handleRefresh = () => {
         getLocoUsers();
     };
 
     return (
         <div className="centered">
+            {/* Links to navigate */}
             <Link to="/main" className="go-back-button">
                 <IconButton type="button"><ArrowBackIcon /></IconButton>
             </Link>
@@ -65,10 +73,12 @@ function location() {
                     Invite People
                 </Button>
             </Link>
+            {/* Display location name */}
             <h1 className="location">{locationName}</h1>
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <h2 style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>Who's Here?</h2>
+                {/* Textarea to show users in the location */}
                 <textarea
                     id="whosHereTextBox"
                     rows="10"
@@ -80,6 +90,7 @@ function location() {
                     {getLocoUsers()}
                 </textarea>
             </div>
+            {/* Buttons for joining, leaving, and refreshing the group */}
             <Button variant="contained" type="button" style={{ width: '140px', marginTop: '10px' }}
                 onClick={joinLocation}>
                 Join Group
@@ -96,4 +107,4 @@ function location() {
     );
 }
 
-export default location;
+export default Location;
