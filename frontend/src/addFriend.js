@@ -9,13 +9,14 @@ import './center.css';
 
 // Component for adding friends
 function AddFriendPage() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     // State to store friend's code
     const [friend, setFriend] = useState('');
 
     // Function to handle fetching friend information
     const handleFriend = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/user/${friend}`);
+            const response = await axios.get(`${backendUrl}/api/user/${friend}`);
             console.log(response.data);
         } catch (error) {
             console.error(error);

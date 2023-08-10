@@ -7,18 +7,19 @@ import { Link } from 'react-router-dom';
 
 // Component for the main page
 function MainPage() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     const [locations, setLocations] = useState({});
     const [friendCode, setFriendCode] = useState('');
     const [loading, setLoading] = useState(true); // Add a loading state
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
-        axios.get('http://localhost:8000/api/location/')
+        axios.get(`${backendUrl}/api/location/`)
             .then(res => setLocations(res.data))
             .catch(e => console.log(e));
 
         // Fetch the current user's friend code from the server
-        axios.get('http://localhost:8000/api/email')
+        axios.get(`${backendUrl}/api/email`)
             .then(res => {
                 setFriendCode(res.data);
                 setLoading(false); // Set loading to false when the data is retrieved
@@ -30,7 +31,7 @@ function MainPage() {
     }, []);
 
     const handleLocation = async (locationId) => {
-        axios.get(`http://localhost:8000/api/user/loco/${locationId}`)
+        axios.get(`${backendUrl}/api/user/loco/${locationId}`)
             .then(res => {
                 console.log(res.data);
                 // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
@@ -43,7 +44,7 @@ function MainPage() {
 
     useEffect(() => {
         // Fetch friends data from the API when the component mounts
-        axios.get('http://localhost:8000/api/friends/')
+        axios.get(`${backendUrl}/api/friends/`)
             .then(res => setFriends(res.data))
             .catch(e => console.log(e));
     }, []);

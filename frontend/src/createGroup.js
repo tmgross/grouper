@@ -9,13 +9,14 @@ import './center.css';
 
 // Component for creating a new group
 function NewGroupPage() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     // State to store the new group name
     const [group, setGroup] = useState('');
 
     // Function to handle creating a new group
     const handleNewGroup = async () => {
         try {
-            const response = await axios.post(`http://localhost:8000/api/group/`, { group });
+            const response = await axios.post(`${backendUrl}`, { group });
             console.log(response.data);
         } catch (error) {
             console.error(error);

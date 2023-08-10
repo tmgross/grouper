@@ -9,6 +9,7 @@ import './center.css';
 
 // Component for inviting friends to a group
 function GroupInvitePage() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     const [friend, setFriend] = useState('');
 
     // Function to handle sending group invite
@@ -16,7 +17,7 @@ function GroupInvitePage() {
         try {
             // Replace this with proper function for inviting to group
             // Example:
-            // const response = await axios.post(`http://localhost:8000/api/group/invite`, { friend });
+            // const response = await axios.post(`${backendUrl}/api/group/invite`, { friend });
             // console.log(response.data);
         } catch (error) {
             console.error(error);

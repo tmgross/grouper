@@ -11,13 +11,14 @@ import './transitions.css';
 
 // Component for user login
 function LogInPage() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     const [email, setEmail] = useState('');
     // const navigate = useNavigate();
 
     // Function to handle user login
     const handleLogin = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/user/${email}`);
+            const response = await axios.get(`${backendUrl}/api/user/${email}`);
             console.log(response.data);
             // navigate('/main') UNCOMMENT ONCE NO VALIDATION ERRORS
         } catch (error) {
