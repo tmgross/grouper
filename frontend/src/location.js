@@ -6,11 +6,13 @@ import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 // Component for managing the current location
 function Location() {
-    const [name, setName] = useState('');
     const [locationName, setLocationName] = useState('');
+    const [loading, setLoading] = useState(true); // Add a loading state
+
 
     // Function to join the current location
     const joinLocation = () => {
@@ -36,8 +38,12 @@ function Location() {
         axios.get(`http://localhost:8000/api/user/location/loconame`)
             .then(res => {
                 setLocationName(res.data); // Set the locationName state with the response data
+                setLoading(false);
             })
-            .catch(e => console.log(e))
+            .catch(e => {
+                console.log(e)
+                setLoading(false);
+            })
     };
 
     // Function to get the users in the current location
@@ -74,7 +80,11 @@ function Location() {
                 </Button>
             </Link>
             {/* Display location name */}
-            <h1 className="location">{locationName}</h1>
+            {!loading && (
+                <div>
+                    <h1 className="location">{locationName}</h1>
+                </div>
+            )}
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <h2 style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>Who's Here?</h2>
