@@ -8,92 +8,92 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function location() {
-  const [name, setName] = useState('');
-  const [locationName, setLocationName] = useState('');
+    const [name, setName] = useState('');
+    const [locationName, setLocationName] = useState('');
 
-  const joinLocation = () => {
-    axios
-      .put('http://localhost:8000/api/user/adduser')
-      .then(res => {
-        console.log(res);
-        // Do something on successful join
-      })
-      .catch(error => console.log(error));
-  };
+    const joinLocation = () => {
+        axios
+            .put('http://localhost:8000/api/user/adduser')
+            .then(res => {
+                console.log(res);
+                // Do something on successful join
+            })
+            .catch(error => console.log(error));
+    };
 
-  const removeUserHandler = () => {
-    axios
-      .delete('http://localhost:8000/api/user/remove')
-      .then(res => console.log(res))
-      .catch(error => console.log(error));
-  };
+    const removeUserHandler = () => {
+        axios
+            .delete('http://localhost:8000/api/user/remove')
+            .then(res => console.log(res))
+            .catch(error => console.log(error));
+    };
 
-  const getLocoName = async (locationid) => {
-    axios.get(`http://localhost:8000/api/user/location/loconame`)
-      .then(res => {
-        setLocationName(res.data); // Set the locationName state with the response data
-      })
-      .catch(e => console.log(e))
-  };
+    const getLocoName = async (locationid) => {
+        axios.get(`http://localhost:8000/api/user/location/loconame`)
+            .then(res => {
+                setLocationName(res.data); // Set the locationName state with the response data
+            })
+            .catch(e => console.log(e))
+    };
 
-  const getLocoUsers = async () => {
-    try {
-      const res = await axios.get('http://localhost:8000/api/location/users');
-      const users = res.data.join('\n'); // Join the array elements with newlines
-      document.getElementById('whosHereTextBox').value = users;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const getLocoUsers = async () => {
+        try {
+            const res = await axios.get('http://localhost:8000/api/location/users');
+            const users = res.data.join('\n'); // Join the array elements with newlines
+            document.getElementById('whosHereTextBox').value = users;
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-  useEffect(() => {
-    getLocoName();
-    getLocoUsers();
-  }, []);
+    useEffect(() => {
+        getLocoName();
+        getLocoUsers();
+    }, []);
 
-  const handleRefresh = () => {
-    getLocoUsers();
-  };
+    const handleRefresh = () => {
+        getLocoUsers();
+    };
 
-  return (
-    <div className="centered">
-      <Link to="/main" className="go-back-button">
-        <IconButton type="button"><ArrowBackIcon /></IconButton>
-      </Link>
-      <Link to="/invitetogroup" className="log-out-button">
-        <Button variant="contained" type="button">
-          Invite People
-        </Button>
-      </Link>
-      <h1 className="location">{locationName}</h1>
+    return (
+        <div className="centered">
+            <Link to="/main" className="go-back-button">
+                <IconButton type="button"><ArrowBackIcon /></IconButton>
+            </Link>
+            <Link to="/invitetogroup" className="log-out-button">
+                <Button variant="contained" type="button">
+                    Invite People
+                </Button>
+            </Link>
+            <h1 className="location">{locationName}</h1>
 
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>Who's Here?</h2>
-        <textarea
-          id="whosHereTextBox"
-          rows="10"
-          cols="50"
-          readOnly
-          disabled
-          style={{resize: 'none'}}
-        >
-          {getLocoUsers()}
-        </textarea>
-      </div>
-        <Button variant="contained" type="button"  style={{width: '140px', marginTop: '10px'}}
-        onClick={joinLocation}>
-          Join Group
-        </Button>
-        <Button variant="contained" type="button" style={{width: '140px', marginTop: '10px'}} 
-        onClick={removeUserHandler}>
-          Leave Group
-        </Button>
-        <Button variant="contained" type="button" style={{width: '140px', marginTop: '10px'}} 
-        onClick={handleRefresh}>
-          Refresh
-        </Button>
-    </div>
-  );
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <h2 style={{ alignSelf: 'flex-start', marginBottom: '5px' }}>Who's Here?</h2>
+                <textarea
+                    id="whosHereTextBox"
+                    rows="10"
+                    cols="50"
+                    readOnly
+                    disabled
+                    style={{ resize: 'none' }}
+                >
+                    {getLocoUsers()}
+                </textarea>
+            </div>
+            <Button variant="contained" type="button" style={{ width: '140px', marginTop: '10px' }}
+                onClick={joinLocation}>
+                Join Group
+            </Button>
+            <Button variant="contained" type="button" style={{ width: '140px', marginTop: '10px' }}
+                onClick={removeUserHandler}>
+                Leave Group
+            </Button>
+            <Button variant="contained" type="button" style={{ width: '140px', marginTop: '10px' }}
+                onClick={handleRefresh}>
+                Refresh
+            </Button>
+        </div>
+    );
 }
 
 export default location;

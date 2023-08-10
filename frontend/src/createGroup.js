@@ -8,35 +8,35 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './center.css';
 
 function NewGroupPage() {
-  const [group, setGroup] = useState('');
+    const [group, setGroup] = useState('');
 
-  const handleNewGroup = async () => {
-    axios.post(`http://localhost:8000/api/group/`, {group})
-      .then(res => console.log(res.data))
-      .catch(e => console.log(e))
-  };
+    const handleNewGroup = async () => {
+        axios.post(`http://localhost:8000/api/group/`, { group })
+            .then(res => console.log(res.data))
+            .catch(e => console.log(e))
+    };
 
-  return (
-    <div className="centered">
-      <Link to="/main" className="go-back-button">
-        <IconButton type="button"><ArrowBackIcon /></IconButton>
-      </Link>
-      <h1 className="location">New Group</h1>
-      <div className="textbox-container">
-        <input
-          className="form-control emailIn"
-          type="text"
-          placeholder="Enter Group Name"
-          onChange={(e) => setGroup(e.target.value)}
-        />
-        <Link to="/main">
-          <Button variant="contained" type="button" onClick={handleNewGroup}>
-            Create Group
-          </Button>
-        </Link>
-      </div>
-    </div>
-  );
+    return (
+        <div className="centered">
+            <Link to="/main" className="go-back-button">
+                <IconButton type="button"><ArrowBackIcon /></IconButton>
+            </Link>
+            <h1 className="location">New Group</h1>
+            <div className="textbox-container">
+                <input
+                    className="form-control emailIn"
+                    type="text"
+                    placeholder="Enter Group Name"
+                    onChange={(e) => setGroup(e.target.value)}
+                />
+                <Link to="/main">
+                    <Button variant="contained" type="button" onClick={handleNewGroup}>
+                        Create Group
+                    </Button>
+                </Link>
+            </div>
+        </div>
+    );
 }
 
 export default NewGroupPage;
