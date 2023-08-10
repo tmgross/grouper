@@ -84,7 +84,7 @@ function MainPage() {
                         value={friends.join('\n')}  /* Join the friends array with line breaks */
                     >
                         {/* Placeholder text */}
-                        This is a large text box that users can't edit.
+                        This is the friends text box.
                     </textarea>
                 </div>
 

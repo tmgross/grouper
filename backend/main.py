@@ -107,7 +107,7 @@ async def getUserEmail():
 	if not currUser:
 		return "invalid user"
 	else:
-		return currUser.getEmail()
+		return currUser.get_email()
 
 @app.get("/api/location/users")
 async def getLocationUsers():
