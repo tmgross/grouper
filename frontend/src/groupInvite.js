@@ -14,10 +14,11 @@ function GroupInvitePage() {
     // Function to handle sending group invite
     const handleInvite = async () => {
         try {
+            const response = await axios.put(`http://localhost:8000/api/invite/group/${friend}`);
             // Replace this with proper function for inviting to group
             // Example:
             // const response = await axios.post(`http://localhost:8000/api/group/invite`, { friend });
-            // console.log(response.data);
+            console.log(response.data);
         } catch (error) {
             console.error(error);
         }

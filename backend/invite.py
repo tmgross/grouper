@@ -13,7 +13,7 @@ class GroupInvite:
 
     def __init__(self,  inviteFromId, toEmail):
         self.toEmail = toEmail
-        self.fromId = inviteFromId
+        self.fromId = str(inviteFromId)
         #stores which collection to store the invite in
         self.inviteCollection = db.group_invites
 
