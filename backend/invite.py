@@ -73,8 +73,7 @@ class GroupInvite:
     # calls the delete invite function could be expanded for messaging later
     async def reject_invite(self):
         print("rejected")
-        await self.__delete_invite()
-        return
+        return await self.__delete_invite()
     
     
 
