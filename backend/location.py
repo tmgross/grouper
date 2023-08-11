@@ -16,6 +16,7 @@ class Location:
         self.name= "N/A"
         self.totalUsers = []
 
+    # initializes the location information from the daatabase
     async def initialize(self):
         #accesses the user_information collection
         locoCollection = db.locations
@@ -27,14 +28,17 @@ class Location:
             self.name = str(document["name"])
             self.totalUsers = []
         
+    #returns the location id
     def get_id(self):
         return self.id
 
+    # returns the location name
     def get_name(self):
         if(self.name is None):
             return "N/A"
         return self.name
 
+    # returns all the users currently at the location
     async def get_current_users(self):
         users = []
         cursor = db.user_locations.find(
@@ -43,7 +47,6 @@ class Location:
         )
         async for document in cursor:
             if document.get("userName") is not None:
-                #print(document["userName"])
                 users.append(document["userName"])
         if users:
             return users

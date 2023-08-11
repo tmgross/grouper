@@ -91,124 +91,9 @@ async def add_user_access(user,location):
 #adds an invite into the group_invites table in the database
 async def new_group_invite(fromId,toEmail):
     ivt = GroupInvite(fromId,toEmail)
-    ivt.addInvite()
-
-'''
-#takes in the current users email
-# gets all of the group invite objects that that user has in an array
-async def get_all_group_invites(userEmail):
-    invites = []
-    collection = db.group_invites
-    cursor = collection.find({"toEmail":userEmail})
-    async for document in cursor:
-            print("ran")
-            ivt= GroupInvite(document["fromId"],document["toEmail"])
-            await ivt.initialize()
-            invites.append(ivt)
-    return invites
-
-#takes in the email of the current user
-# returns a list of all of the friend invite objects the user has
-async def get_all_friend_invites(userEmail):
-    invites = []
-    collection = db.friend_invites
-    cursor = collection.find({"toEmail":userEmail})
-    async for document in cursor:
-            print("ran")
-            ivt= FriendInvite(document["fromId"],document["toEmail"])
-            await ivt.initialize()
-            invites.append(ivt)
-    return invites
+    ivt.add_invite()
 
 
-# takes the id of the user
-# gets ids of all of thier friends
-# uses those ids and the user_accounts table to get the info for each friend
-async def get_all_friends(userId):
-    friendIds = []
-    collection = db.friends
-    cursor = collection.find({"userid":userId})
-    async for document in cursor:
-            #print("ran")
-            friendIds.append(ObjectId(document["friendid"]))
-    filter = {"_id": { '$in': friendIds }}
-    users = db.user_accounts
-    cursor = users.find(filter)
-    friendNames = []
-    async for document in cursor:
-            print(document)
-            if document.get("name") is not None:
-                friendNames.append(document["name"])
-                print(document["name"])
-    return friendNames
-'''
-'''
-#finds all people with the given name in the user_information database
-#input: the name of the person we want to find
-#returns: a list of the information of those who meet the criteria of the input
-async def fetch_one_user(name):
-    document = await collection.find_one({"name": name})
-    return document
-
-
-
-#finds all people in the user_information database
-#input: n/a
-#returns: a list of the information of all users
-async def fetch_all_users():
-    users = []
-    cursor = collection.find()
-    async for document in cursor:
-        users.append(Users(**document))
-    return users
-
-'''
-
-'''
-#finds all people at the given location user_information database
-#input: the location of the people we want to find
-#returns: a list of the information of those who meet the criteria of the input
-def getPeople(loco):
-    # find code goes here
-    cursor = collection.find({"location": loco})
-
-    data =[]
-    # iterate code goes here
-    for doc in cursor:
-        data.append(doc)
-        print(doc)
-
-    print(len(data))
-    return data
-'''
-
-'''
-# adds a person to a location in user locations
-# input: the name of the person we want to add
-# returns: the id of the person we just added
-async def addUserToLocation(user,locationid):
-    dict1 = {}
-    document = user
-    dict1 = {"name": document.getName(),"location":locationid,"userid":document.getId()}
-    result = await collection.insert_one(dict1)
-    return result.inserted_id
-
-
-
-#removes all people with a given name from the database
-#input: the name of the person/people we want to remove
-#returns: the number of people deleted
-async def remove_user(user):
-    result = await collection.delete_one({"userid": user.getId()})
-
-
-# adds a new location to the locations table
-async def createNewLocation(name):
-    locoCollection = db.locations
-    dict1 = {"name":name}
-    result = await locoCollection.insert_one(dict1)
-    return result.inserted_id
-'''
 #returns the location based on id
 async def get_location(id):
     loco = Location(str(id))
@@ -217,7 +102,7 @@ async def get_location(id):
     return loco
 
 # returns all of the locations in the locations database {id,name}
-async def getAllLocations():
+async def get_all_locations():
     locoCollection = db.locations
     cursor = locoCollection.find()
     locos = {}

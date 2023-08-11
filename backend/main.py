@@ -23,6 +23,7 @@ origins = ["http://localhost:3000","http://localhost:3000/","https://localhost:3
 
 
 # middleware acts as a bridge between database and application
+# many calls are to the database.py file or objects
 
 app.add_middleware(
 	CORSMiddleware,
@@ -70,48 +71,47 @@ async def new_group(request: CreateGroupRequest):
 		return response
 	raise HTTPException(status_code=400, detail="Failed to create a new group")
 
-# #getting all locations
-# @app.get("/api/location/")
-# async def getLocations():
-# 	response = await getAllLocations()
-# 	return response
 
 #getting all locations
 @app.get("/api/location/")
-async def getLocations():
+async def get_locations():
 	response = await currUser.get_locations()
 	#response = await get_all_locations(currUser)
 	return response
 
 #creates an object for a specific location
 @app.get("/api/user/loco/{locationId}")
-async def getCurrLocation(locationId):
+async def get_curr_location(locationId):
 	global currLoco
 	currLoco = await get_location(locationId)
 	return currLoco
 
+#get the name of a specific location
 @app.get("/api/user/location/loconame")
-async def getLocoName():
+async def get_loco_name():
 	if not currLoco:
 		return "Error"
 	return currLoco.get_name()
 
+#get the name of the logged in user
 @app.get("/api/username")
-async def getUserName():
+async def get_user_name():
 	if not currUser:
 		return "invalid user"
 	else:
 		return currUser.get_name()
 
+#get email of the logged in user
 @app.get("/api/email")
-async def getUserEmail():
+async def get_user_email():
 	if not currUser:
 		return "invalid user"
 	else:
 		return currUser.get_email()
 
+# get all users currently at a location
 @app.get("/api/location/users")
-async def getLocationUsers():
+async def get_location_users():
 	users = await currLoco.get_current_users()
 	return users
 
@@ -131,26 +131,28 @@ async def joinLocation():
 		return response
 	raise HTTPException(400, "Something went wrong")
 
-
+# gets all of the users friends
 @app.get("/api/friends/")
 async def get_friends():
 	friendsList = await currUser.get_friends()
 	return friendsList
 
+
+#gets all of the friend invites that the user has
 @app.get("/api/invites/friends")
 async def get_friend_invites():
 	return await currUser.get_friend_invites()
 
+#gets the group invites the user has
 @app.get("/api/invites/get/groups")
 async def get_group_invites():
 	invites = await currUser.get_group_invites()
 	ivts = {}
 	for i in range (len(invites)):
-	#for invite in invite:
-		#ivts[invite.getFromId()]=invite.getFromName()
 		ivts[invites[i].get_from_id()]=invites[i].get_group_name()
 	return ivts
 
+# sets the selected group invites
 @app.post("/api/invite/group/set/{groupId}")
 async def set_selected_group(groupId):
 	global selectedGroupIvt
@@ -161,6 +163,7 @@ async def set_selected_group(groupId):
 			selectedGroupIvt = invites[i]
 	return selectedGroupIvt != None
 
+# accepts a group invite
 @app.put("/api/invite/group/accept")
 async def accept_group_invite():
 	if(selectedGroupIvt!=None):
@@ -169,32 +172,21 @@ async def accept_group_invite():
 	else:
 		return "invalid object"
 
+# rejects a group invite
 @app.put("/api/invite/group/reject")
-async def accept_group_invite():
+async def reject_group_invite():
 	if(selectedGroupIvt!=None):
 		await selectedGroupIvt.reject_invite()
 		return "rejected"
 	else:
 		return "invalid object" 
 
+# sents a new group invite
 @app.put("/api/invite/group/{toEmail}")
 async def new_group_invite(toEmail):
 	ivt = GroupInvite(currLoco.get_id(),str(toEmail))
 	return await ivt.add_invite()  
 
-
-'''
-#creates an object for a specific location
-@app.get("/api/user/{locationid}")
-async def getCurrLocation(locationid):
-	currLoco = getLocation(locationid)
-
-
-# gets all users at a location
-@app.get("/api/user/")
-async def getUsersAtLoco(locationid):
-	return currLoco.getCurrentUsers()
-'''
 
 if __name__ == "__main__":
     uvicorn.run(

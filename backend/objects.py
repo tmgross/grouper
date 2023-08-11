@@ -15,6 +15,7 @@ class User:
         self.name = ""
         self.id = None
 
+    # initializes the users data from the database
     async def initialize(self):
         print("objects.py User.initialize()")
         # accesses the user_information collection
@@ -23,12 +24,15 @@ class User:
         self.name = str(document["name"])
         self.id = str(document["_id"])
 
+    #returns the users email
     def get_email(self):
         return self.email
     
+    #returns the users name
     def get_name(self):
         return self.name
     
+    #returns the usrs id
     def get_id(self):
         return self.id
     
@@ -80,9 +84,9 @@ class User:
                 print(document["name"])
         return friendNames
     
+    #gets the locations the user has access to
     async def get_locations(self):
         accessCollection = db.user_access
-    #objid = ObjectId(user.getId())
         locations = accessCollection.find({"userid": self.id})
         accessable = [ObjectId(l["locationid"]) async for l in locations]
         locoCollection = db.locations
@@ -96,8 +100,6 @@ class User:
             if document.get("name") is not None:
                 locos[str(document["_id"])]=document["name"]
                 print(document["name"])
-        #for d in locos.keys():
-        #     print("id = ",d)
         return locos
     
     
