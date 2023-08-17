@@ -10,9 +10,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // Component for handling invites and requests
 function InvitePage() {
     const [groupInvites, setGroupInvites] = useState({});
+    const [friendInvites, setFriendInvites] = useState({});
 
     useEffect(() => {
         fetchGroupInvites();
+        fetchFriendInvites();
     }, []);
 
     const fetchGroupInvites = async () => {
@@ -24,10 +26,53 @@ function InvitePage() {
         }
     };
 
+    const fetchFriendInvites = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/api/invites/get/friends');
+            setFriendInvites(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleFriendInvitationClick = async (fromId, fromName) => {
+        // Handle friend invitation click, e.g., accept or decline
+        const response = await axios.post(`http://localhost:8000/api/invite/friend/set/${fromId}`);
+        console.log(`Selected friend invitation from ${fromName} (ID: ${fromId})`);
+    };
+
+    const handleFriendAcceptClick = async () => {
+        try {
+            const response = await axios.put('http://localhost:8000/api/invite/friend/accept');
+            const newId = response.data;
+            if (newId != "invalid object") {
+                console.log(`Accepted friend invitation. New friend ID: ${newId}`);
+            } else {
+                console.log("Invalid friend invitation object.");
+            }
+        } catch (error) {
+            console.error('Error while accepting friend invitation:', error);
+        }
+    };
+
+    const handleFriendRejectClick = async () => {
+        try {
+            const response = await axios.put('http://localhost:8000/api/invite/friend/reject');
+            if (response.data == "rejected") {
+                console.log("Rejected friend invitation.");
+            } else {
+                console.log("Invalid friend invitation object.");
+            }
+        } catch (error) {
+            console.error('Error while rejecting friend invitation:', error);
+        }
+    };
+
+
     const handleInvitationClick = async (fromId, fromName) => {
         // Handle the invitation click, e.g., accept or decline
         const response = await axios.post(`http://localhost:8000/api/invite/group/set/${fromId}`);
-        console.log(`Accepted invitation from ${fromName} (ID: ${fromId})`);
+        console.log(`Selected invitation from ${fromName} (ID: ${fromId})`);
     };
 
     const handleAcceptClick = async () => {
@@ -78,10 +123,14 @@ function InvitePage() {
                     <h2>Friend Requests</h2>
                     {/* Container for request buttons */}
                     <div className="button-container">
-                        <button className="highlight-on-hover">Button 1</button>
-                        <button className="highlight-on-hover">Button 2</button>
-                        <button className="highlight-on-hover">Button 3</button>
-                        <button className="highlight-on-hover">Button 4</button>
+                    {Object.entries(friendInvites).map(([fromId, fromName]) => (
+                        <button
+                            key={fromId}
+                            onClick={() => handleFriendInvitationClick(fromId, fromName)}
+                        >
+                            {fromName}
+                        </button>
+                    ))}
                     </div>
                 </div>
 
@@ -107,13 +156,13 @@ function InvitePage() {
                 gap: '10px', marginLeft: '10px', marginTop: '10px'
             }} >
                 {/* Buttons for handling requests and invites */}
-                <Button variant="contained" type="button" style={{ width: '200px' }}>
+                <Button variant="contained" type="button" style={{ width: '200px' }} onClick = {handleFriendAcceptClick}>
                     Accept Request
                 </Button>
                 <Button variant="contained" type="button" style={{ width: '200px' }} onClick={handleAcceptClick} >
                     Accept Invite
                 </Button>
-                <Button variant="contained" type="button" style={{ width: '200px' }}>
+                <Button variant="contained" type="button" style={{ width: '200px' }} onClick = {handleFriendRejectClick}>
                     Delete Request
                 </Button>
                 <Button variant="contained" type="button" style={{ width: '200px' }} onClick={handleRejectClick} >

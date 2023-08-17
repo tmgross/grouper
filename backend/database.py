@@ -94,6 +94,11 @@ async def new_group_invite(fromId,toEmail):
     ivt.add_invite()
 
 
+async def new_friend_invite(fromId,toEmail):
+    ivt = FriendInvite(fromId,toEmail)
+    ivt.add_invite()
+
+
 #returns the location based on id
 async def get_location(id):
     loco = Location(str(id))

@@ -15,7 +15,7 @@ function AddFriendPage() {
     // Function to handle fetching friend information
     const handleFriend = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/user/${friend}`);
+            const response = await axios.put(`http://localhost:8000/api/invite/friend/${friend}`);
             console.log(response.data);
         } catch (error) {
             console.error(error);
