@@ -13,6 +13,7 @@ global currUser, currLoco, selectedGroupIvt
 currUser = None
 currLoco = None
 selectedGroupIvt = None
+selectedFriendIvt = None
 
 # app object
 app = FastAPI()
@@ -139,9 +140,13 @@ async def get_friends():
 
 
 #gets all of the friend invites that the user has
-@app.get("/api/invites/friends")
+@app.get("/api/invites/get/friends")
 async def get_friend_invites():
-	return await currUser.get_friend_invites()
+	invites = await currUser.get_friend_invites()
+	ivts = {}
+	for i in range (len(invites)):
+		ivts[invites[i].get_from_id()]=invites[i].get_from_name()
+	return ivts
 
 #gets the group invites the user has
 @app.get("/api/invites/get/groups")
@@ -162,6 +167,42 @@ async def set_selected_group(groupId):
 			global selectedGroupIvt
 			selectedGroupIvt = invites[i]
 	return selectedGroupIvt != None
+
+# sets a selected invite
+@app.post("/api/invite/friend/set/{friendId}")
+async def set_selected_friend(friendId):
+	global selectedFriendIvt
+	invites = await currUser.get_friend_invites()
+	for i in range (len(invites)):
+		if(invites[i].get_from_id()==friendId):
+			global selectedFriendIvt
+			selectedFriendIvt = invites[i]
+	return selectedFriendIvt != None
+
+# accepts a friend invite
+@app.put("/api/invite/friend/accept")
+async def accept_friend_invite():
+	if(selectedFriendIvt!=None):
+		newid = await selectedFriendIvt.accept_invite()
+		return newid
+	else:
+		return "invalid object"
+
+# rejects a friend invite
+@app.put("/api/invite/friend/reject")
+async def reject_group_invite():
+	if(selectedFriendIvt!=None):
+		await selectedFriendIvt.reject_invite()
+		return "rejected"
+	else:
+		return "invalid object" 
+	
+# sents a new friend invite
+@app.put("/api/invite/friend/{toEmail}")
+async def new_friend_invite(toEmail):
+	ivt = FriendInvite(currUser.get_id(),str(toEmail))
+	return await ivt.add_invite()  
+
 
 # accepts a group invite
 @app.put("/api/invite/group/accept")
