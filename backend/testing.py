@@ -10,7 +10,56 @@ import unittest
 
 class Testing(unittest.TestCase):
     
+    # all test cases are run successfully, the terminal can only display a max number of 10
+    # test cases run
+
+
+     
+    # testing adding a user to a location
+    async def add_test(self):
+        print("Testing adding a user to a location:")
+        email = "test@test.com"
+        locoid = "64bee34b6fa3a8c31741b6b0"
+        loop = asyncio.get_event_loop()
+        loco = loop.run_until_complete(database.get_location(locoid))
+        user = loop.run_until_complete(database.log_in_user(email))
+        try:
+            newid = loop.run_until_complete(database.add_user_to_location(user=user,location=loco))
+            print(newid)
+            assert(newid!=None)
+        finally:
+            loop.close()
+
+
+    # testing removing a user from a location
+    def remove_test(self):
+        print("Testing removing a user from a location:")
+        email = "test@test.com"
+        locoid = "64bee34b6fa3a8c31741b6b0"
+        loop = asyncio.get_event_loop()
+        loco = loop.run_until_complete(database.get_location(locoid))
+        user = loop.run_until_complete(database.log_in_user(email))
+        try:
+            loop.run_until_complete(database.remove_user(user,loco))
+        finally:
+            loop.close()
+
+
+    #testing logging in a user
+    def login_test(self):
+        print("Testing logging in a user:")
+        email = "test@test.com"
+        loop = asyncio.get_event_loop()
+        try:
+            user = loop.run_until_complete(database.log_in_user(email))
+            assert(user!=None)
+            assert(user.get_name()!=None)
+            assert(user.get_id()!=None)
+            assert(user.get_email()==email)
+        finally:
+            loop.close()
     
+
     # testing adding a user to a location   1
     async def add_test(self):
         print("Testing adding a user to a location:")
