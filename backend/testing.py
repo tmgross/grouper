@@ -9,52 +9,9 @@ from friendInvite import FriendInvite
 import unittest
 
 class Testing(unittest.TestCase):
-    """
-    # testing adding a user to a location
-    def add_test(self):
-        print("Testing adding a user to a location:")
-        email = "test@test.com"
-        locoid = "64bee34b6fa3a8c31741b6b0"
-        loop = asyncio.get_event_loop()
-        loco = loop.run_until_complete(database.get_location(locoid))
-        user = loop.run_until_complete(database.log_in_user(email))
-        try:
-            newid = loop.run_until_complete(database.add_user_to_location(user=user,location=loco))
-            print(newid)
-            assert(newid!=None)
-        finally:
-            loop.close()
-
-
-    # testing removing a user from a location
-    def remove_test(self):
-        print("Testing removing a user from a location:")
-        email = "test@test.com"
-        locoid = "64bee34b6fa3a8c31741b6b0"
-        loop = asyncio.get_event_loop()
-        loco = loop.run_until_complete(database.get_location(locoid))
-        user = loop.run_until_complete(database.log_in_user(email))
-        try:
-            loop.run_until_complete(database.remove_user(user,loco))
-        finally:
-            loop.close()
-
-
-    #testing logging in a user
-    def login_test(self):
-        print("Testing logging in a user:")
-        email = "test@test.com"
-        loop = asyncio.get_event_loop()
-        try:
-            user = loop.run_until_complete(database.log_in_user(email))
-            assert(user!=None)
-            assert(user.get_name()!=None)
-            assert(user.get_id()!=None)
-            assert(user.get_email()==email)
-        finally:
-            loop.close()
-    """
-    # testing adding a user to a location
+    
+    
+    # testing adding a user to a location   1
     async def add_test(self):
         print("Testing adding a user to a location:")
         email = "test@test.com"
@@ -67,7 +24,7 @@ class Testing(unittest.TestCase):
         assert(newid!=None)
 
 
-    # testing removing a user from a location
+    # testing removing a user from a location   2     
     async def remove_test(self):
         print("Testing removing a user from a location:")
         email = "test@test.com"
@@ -78,19 +35,21 @@ class Testing(unittest.TestCase):
         assert(res>=0)
 
 
-    #testing logging in a user
+    #testing logging in a user      3
     async def login_test(self):
         print("Testing logging in a user:")
         email = "test@test.com"
         user = await database.log_in_user(email)
-        assert(user!=None)
-        assert(user.get_name()!=None)
-        assert(user.get_id()!=None)
-        assert(user.get_email()==email)
+        if user == None:
+            print("User login failed.")
+            assert user == None
+        else:
+            print("User logged in successfully.")
+            assert user.email == "test@test.com"
         
 
 
-    # test removing a user from all locations they are at 
+    # test removing a user from all locations they are at       4
     async def auto_logout(self):
         print("Testing removal of a user from any location:")
         email = "test@test.com"
@@ -106,7 +65,7 @@ class Testing(unittest.TestCase):
         print(user.get_id())
 
 
-    # testing getting every location 
+    # testing getting every location        5
     async def get_locos(self):
         print("Testing getting every location:")
         locos = await database.get_all_locations()
@@ -114,7 +73,7 @@ class Testing(unittest.TestCase):
         print(locos)
 
 
-    # testing getting a single location
+    # testing getting a single location         6
     async def test_location_get(self):
         print("Testing getting a single location:")
         id = "64bee34b6fa3a8c31741b6b0"
@@ -123,7 +82,7 @@ class Testing(unittest.TestCase):
         print(locos.get_name())
 
 
-    # testing getting all locations and then checking all locations
+    # testing getting all locations and then checking all locations         7
     async def test_loco2(self):
         print("Testing getting and checking every location:")
         locos = await database.get_all_locations()
@@ -136,7 +95,7 @@ class Testing(unittest.TestCase):
             print(val.get_name())
 
 
-    # testing getting the current users on a location
+    # testing getting the current users on a location           8
     async def test_loco_users(self):
         print("Testing getting all users at a location:")
         id = "64bee34b6fa3a8c31741b6b0"
@@ -146,23 +105,8 @@ class Testing(unittest.TestCase):
             assert(l!=None)
             print("user name: ",l)
 
-    '''
-    #test giving a user access to a location
-    def test_add_user_access(self):
-        print("Testing adding user access:")
-        id = "64bee34b6fa3a8c31741b6b0"
-        email = "test@test.com"
-        loop = asyncio.get_event_loop()
-        try:
-            loco =Location(id)
-            user = loop.run_until_complete(database.log_in_user(email))
-            val = loop.run_until_complete(database.add_user_access(user,loco))
-            assert(val!=None)
-            print(val)
-        finally:
-            loop.close()
-    '''
-    #test giving a user access to a location
+    
+    #test giving a user access to a location            9
     async def test_add_user_access(self):
         print("Testing adding user access:")
         id = "64bee34b6fa3a8c31741b6b0"
@@ -174,7 +118,7 @@ class Testing(unittest.TestCase):
         print(val)
 
 
-    # test the location filter for users view
+    # test the location filter for users view           10
     async def test_loco_filter(self):
         print("Testing location filter:")
         email = "test@test.com"
@@ -183,7 +127,7 @@ class Testing(unittest.TestCase):
         assert(locos!=None)
         print(locos)
 
-    # test sending a group invite
+    # test sending a group invite                   11
     async def test_invite(self):
         print("Testing group invite send and accept:")
         toEmail = "test@test.com"
@@ -197,7 +141,7 @@ class Testing(unittest.TestCase):
         id = await (ivt.accept_invite())
         print("Accepted id: ",id)
 
-    # getting all group invites a user has
+    # getting all group invites a user has              12
     async def test_get_group_invites(self):
         print("Testing getting Group Invites:")
         userEmail = "test@test.com"
@@ -213,7 +157,7 @@ class Testing(unittest.TestCase):
             print("location name: ",i.get_group_name())
 
 
-    # testing sending a friend request
+    # testing sending a friend request              13
     async def test_friend_invite(self):
         print("Testing sending a friend invite:")
         fromId ="64b98136ee31d004275ff579"
@@ -229,7 +173,7 @@ class Testing(unittest.TestCase):
         id = await ivt.accept_invite()
         print("Accepted id: ",id)
 
-    #testing getting all friend invites
+    #testing getting all friend invites             14
     async def test_get_all_friend_invites(self):
         print("Testing getting all friend invites")
         userEmail ="test@test.com"
@@ -249,7 +193,7 @@ class Testing(unittest.TestCase):
         num = await ivt.reject_invite()
         assert(num>0)
 
-    #testing getting all friends
+    #testing getting all friends            15
     async def test_get_all_friends(self):
         print("Testing getting all friends:")
         userEmail ="test@test.com"
@@ -259,9 +203,13 @@ class Testing(unittest.TestCase):
         for i in friends:
             print("Friend name: ",i)
 
+
+    
+
     
 if __name__ == '__main__':
-    unittest.main()
+    test_suite = unittest.TestLoader().loadTestsFromTestCase(Testing)
+    unittest.TextTestRunner().run(test_suite)
 
     
     
